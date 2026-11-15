@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/perfilAdmin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Logo Partiu Plantão">
+        </div>
+
+        <ul>
+            <li><a href="homeAdmin.html">Home</a></li>
+            <li><a href="plantoesAdmin.html">Plantões</a></li>
+            <li><a href="perfilAdmin.html">Perfil</a></li>
+        </ul>
+
+        <button class="btn-sair" onclick="sair()">
+            <i class="bi bi-box-arrow-right"></i>
+            Sair
+        </button>
+    </header>
+
+    <main>
+
+        <!-- ===== CARD PRINCIPAL: IDENTIDADE DA CLÍNICA ===== -->
+        <section class="pf-hero">
+
+            <!-- Foto / Ícone da Clínica -->
+            <div class="pf-avatar">
+                <i class="bi bi-hospital"></i>
+            </div>
+
+            <!-- Informações de Identificação -->
+            <div class="pf-hero-info">
+
+                <div class="pf-hero-topo">
+                    <div>
+                        <h1 class="pf-nome">Hospital Israelita Albert Einstein</h1>
+                        <p class="pf-tipo">
+                            <i class="bi bi-building-fill-check"></i>
+                            Hospital Geral · Morumbi — SP
+                        </p>
+                    </div>
+                    <span class="pf-badge-ativo">
+                        <i class="bi bi-circle-fill"></i> Ativo
+                    </span>
+                </div>
+
+                <!-- Avaliação e estrelas -->
+                <div class="pf-avaliacao">
+                    <span class="pf-nota">4,1</span>
+                    <div class="pf-estrelas">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <span class="pf-num-aval">1,662 avaliações</span>
+                </div>
+
+                <!-- Badges / selos de reputação -->
+                <div class="pf-selos">
+                    <span class="pf-selo">
+                        <i class="bi bi-patch-check-fill"></i> Pagamento em dia
+                    </span>
+                    <span class="pf-selo">
+                        <i class="bi bi-shield-fill-check"></i> Documentação ok
+                    </span>
+                    <span class="pf-selo">
+                        <i class="bi bi-building-fill"></i> Ótima infraestrutura
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Botão Editar Perfil -->
+            <button class="pf-btn-editar">
+                <i class="bi bi-pencil-fill"></i> Editar perfil
+            </button>
+
+        </section>
+
+        <!-- ===== LINHA DE ESTATÍSTICAS ===== -->
+        <div class="pf-stats">
+
+            <div class="pf-stat-card">
+                <i class="bi bi-calendar2-check-fill pf-stat-icone"></i>
+                <span class="pf-stat-valor">129 mil</span>
+                <span class="pf-stat-label">Plantões realizados</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-currency-dollar pf-stat-icone"></i>
+                <span class="pf-stat-valor">R$ 1.600</span>
+                <span class="pf-stat-label">Valor médio por plantão</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-clock-fill pf-stat-icone"></i>
+                <span class="pf-stat-valor">12h</span>
+                <span class="pf-stat-label">Média de horas/plantão</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-people-fill pf-stat-icone"></i>
+                <span class="pf-stat-valor">11 mil</span>
+                <span class="pf-stat-label">Médicos cadastrados</span>
+            </div>
+
+        </div>
+
+        <!-- ===== GRID DE INFORMAÇÕES DETALHADAS ===== -->
+        <div class="pf-grid">
+
+            <!-- COLUNA ESQUERDA -->
+            <div class="pf-col">
+
+                <!-- Card: Contato -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-telephone-fill"></i>
+                        <h2>Contato</h2>
+                    </div>
+                    <ul class="pf-lista">
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>(11) 2151-1233 </span>
+                        </li>
+                        <li>
+                            <i class="bi bi-whatsapp"></i>
+                            <span>(11) 3620-2550</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>Av. Albert Einstein, 627/701 — Morumbi, São Paulo, SP</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-globe-americas"></i>
+                            <a href="www.einstein.br" class="pf-link">www.einstein.br</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-map"></i>
+                            <a href="https://maps.app.goo.gl/SRQPFKVjPQZfR3Me8" class="pf-link">Ver no Google Maps</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: Especialidades -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                        <h2>Especialidades atendidas</h2>
+                    </div>
+                    <div class="pf-tags">
+                        <span class="pf-tag">Cardiologia</span>
+                        <span class="pf-tag">Oncologia</span>
+                        <span class="pf-tag">Neurologia</span>
+                        <span class="pf-tag">Ortopedia</span>
+                        <span class="pf-tag">Ginecologia e Obstetrícia </span>
+                        <span class="pf-tag">Pediatria</span>
+                        <span class="pf-tag">Gastroenterologia</span>
+                        <span class="pf-tag">Endocrinologia</span>
+                        <span class="pf-tag">Nefrologia</span>
+                        <span class="pf-tag">Hematologia</span>
+                        <span class="pf-tag">Infectologia </span>
+                        <span class="pf-tag">Cirurgia Geral</span>
+                        <span class="pf-tag">+70</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="pf-col">
+
+                <!-- Card: Dados Institucionais -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-file-earmark-text-fill"></i>
+                        <h2>Dados institucionais</h2>
+                    </div>
+                    <ul class="pf-lista">
+                        <li>
+                            <i class="bi bi-card-text"></i>
+                            <span><strong>CNPJ:</strong> 60.765.823/0001-30</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-hospital"></i>
+                            <span><strong>Tipo:</strong> Beneficente (sem fins lucrativos)</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-layers"></i>
+                            <span><strong>Nível:</strong> Complexidade Terciária</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-segmented-nav"></i>
+                            <span><strong>Leitos:</strong> 3.200 leitos</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-patch-check"></i>
+                            <span><strong>Acreditação:</strong> JCI (Joint Commission International); ONA (Nível 3); ACC
+                                (American College of Cardiology); ACR (American College of Radiology); Magnet
+                                Recognition Program.</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-calendar-check"></i>
+                            <span><strong>Membro desde:</strong> Novembro de 2025</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: Contratos e Plantões -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-briefcase-fill"></i>
+                        <h2>Contratos e plantões</h2>
+                    </div>
+                    <ul class="pf-lista">
+                        <li>
+                            <i class="bi bi-file-earmark-person"></i>
+                            <span><strong>Tipo de contrato:</strong> PJ / RPA</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-clock"></i>
+                            <span><strong>Frequência:</strong> Diária / Semanal</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-sun"></i>
+                            <span><strong>Horários:</strong> Diurno e Noturno</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle"></i>
+                            <span><strong>Alvará sanitário:</strong>
+                                <span class="pf-badge-ok">Ativo · vence 12/2026</span>
+                            </span>
+                        </li>
+                    </ul>
+
+                    <!-- Botões de ação -->
+                    <div class="pf-acoes">
+                        <button class="pf-btn-acao pf-btn-primary">
+                            <i class="bi bi-calendar3"></i>
+                            <a href="disponiveis.html">Ver plantões publicados</a>
+                        </button>
+                        <button class="pf-btn-acao pf-btn-secondary"
+                            onclick="window.open('../PDF/historico_pagamentos.pdf')">
+                            <i class="bi bi-receipt"></i>
+                            Histórico de pagamentos
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+
+        // ===== SALVAR DADOS DA CLÍNICA NO LOCALSTORAGE =====
+        // Permite que outras páginas (ex: dispoPlantao) leiam essas informações
+        const clinica = {
+            nome:     document.querySelector('.pf-nome')?.textContent.trim()     || '',
+            endereco: document.querySelector('.pf-lista .bi-geo-alt')
+                        ?.closest('li')?.querySelector('span')?.textContent.trim() || '',
+            cidade:   document.querySelector('.pf-tipo')?.textContent.trim()     || '',
+            telefone: document.querySelector('.pf-lista .bi-telephone')
+                        ?.closest('li')?.querySelector('span')?.textContent.trim() || '',
+        };
+        localStorage.setItem('clinicaPerfil', JSON.stringify(clinica));
+
+        // ===== DESTACAR MENU ATIVO =====
+        const links = document.querySelectorAll("header ul li a");
+        let paginaAtual = window.location.pathname.split("/").pop();
+
+        if (paginaAtual === "") paginaAtual = "perfilAdmin.html";
+
+        links.forEach(link => {
+            if (link.getAttribute("href") === paginaAtual) {
+                link.classList.add("ativo");
+            }
+        });
+
+        // ===== FUNÇÃO DE SAIR =====
+        function sair() {
+            if (confirm("Deseja realmente sair?")) {
+                localStorage.clear();
+                window.location.href = "../user/escolherTipoPerfil.html";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

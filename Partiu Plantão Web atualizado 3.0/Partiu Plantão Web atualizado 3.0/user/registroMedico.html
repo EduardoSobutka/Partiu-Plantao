@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body class="pp-pagina">
+
+    <div class="pp-card">
+
+        <div class="pp-header">
+            <div class="pp-logo-slot">
+                <img src="../img/Logotipo Partiu Plantão.jpg" alt="logo">
+            </div>
+            <h1 class="pp-titulo">Partiu Plantão</h1>
+            <p class="pp-subtitulo">Encontre seu próximo plantão</p>
+        </div>
+
+        <div class="pp-body">
+            <form>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="email" placeholder="Email" id="email" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="text" placeholder="Nome completo">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="text" placeholder="Data de nascimento" id="dataNascimento" maxlength="10">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="tel" placeholder="Telefone" id="telefone">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="text" placeholder="CPF" id="CPFMedico" maxlength="14">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="text" placeholder="CRM e UF (Ex: 123456/PR)" maxlength="9" id="crm">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="password" placeholder="Senha" id="senha1" minlength="6">
+                </div>
+
+                <div class="pp-form-group">
+                    <input class="pp-input" type="password" placeholder="Confirme sua senha" id="senha2" minlength="6">
+                </div>
+
+                <button class="pp-btn-entrar" type="button" onclick="registrar()">
+                    Registrar-se
+                </button>
+
+                <p class="pp-rodape">
+                    Já tem conta?
+                    <a href="loginMedico.html"><b>Faça login</b></a>
+                </p>
+
+            </form>
+        </div>
+
+    </div>
+
+    <button class="botaoVoltar" onclick="window.history.back()">Voltar</button>
+
+    <script>
+
+        // ===== CPF =====
+        const CPFMedico = document.getElementById("CPFMedico");
+
+        CPFMedico.addEventListener("input", () => {
+            let valor = CPFMedico.value.replace(/\D/g, "");
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            CPFMedico.value = valor;
+        });
+
+        // ===== TELEFONE =====
+        const telefone = document.getElementById("telefone");
+
+        telefone.addEventListener("input", () => {
+            let valor = telefone.value.replace(/\D/g, "");
+            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+            telefone.value = valor;
+        });
+
+        // ===== DATA DE NASCIMENTO =====
+        const dataNascimento = document.getElementById("dataNascimento");
+
+        dataNascimento.addEventListener("input", () => {
+            let valor = dataNascimento.value.replace(/\D/g, "");
+            valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
+            valor = valor.replace(/(\d{2})(\d)/, "$1/$2");
+            dataNascimento.value = valor;
+        });
+
+        // ===== CRM =====
+        const crm = document.getElementById("crm");
+
+        crm.addEventListener("input", () => {
+            let valor = crm.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+            let numeros = valor.replace(/[A-Z]/g, "").slice(0, 6);
+            let letras = valor.replace(/[0-9]/g, "").slice(0, 2);
+
+            if (numeros.length === 6 && letras.length > 0) {
+                crm.value = numeros + "/" + letras;
+            } else {
+                crm.value = numeros + letras;
+            }
+        });
+
+        // ===== REGISTRAR =====
+        function registrar() {
+            let email = document.getElementById("email").value;
+            let senha1 = document.getElementById("senha1").value;
+            let senha2 = document.getElementById("senha2").value;
+
+            if (email === "") {
+                alert("Digite seu e-mail.");
+                return;
+            }
+
+            if (senha1.length < 6) {
+                alert("A senha deve ter pelo menos 6 caracteres.");
+                return;
+            }
+
+            if (senha1 !== senha2) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            localStorage.setItem("emailCadastro", email);
+            window.location.href = "ConfirmarEmailMedico.html";
+        }
+
+    </script>
+
+</body>
+
+</html>

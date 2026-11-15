@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/homeAdmin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Partiu Plantão">
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="homeAdmin.html" class="ativo">Home</a></li>
+                <li><a href="plantoesAdmin.html">Plantões</a></li>
+                <li><a href="perfilAdmin.html">Perfil</a></li>
+            </ul>
+        </nav>
+
+        <button class="btn-sair" onclick="sair()">
+            <i class="bi bi-box-arrow-right"></i>
+            Sair
+        </button>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+
+        <!-- ===== BANNER DE BOAS-VINDAS ===== -->
+        <div class="boas-vindas">
+            <div class="bv-texto">
+                <p class="bv-saudacao">Bom dia 👋</p>
+                <h1 class="bv-nome">Hospital Israelita Albert Einstein</h1>
+                <p class="bv-data">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="dataHoje"></span>
+                </p>
+            </div>
+            <div class="bv-avatar">
+                <i class="bi bi-hospital-fill"></i>
+            </div>
+        </div>
+
+        <!-- ===== MÉTRICAS ===== -->
+        <div class="metricas-row">
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-azul">
+                    <i class="bi bi-calendar2-plus"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Plantões publicados</span>
+                    <span class="metrica-valor">34</span>
+                    <span class="metrica-sub">este mês</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-verde">
+                    <i class="bi bi-person-check-fill"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Vagas preenchidas</span>
+                    <span class="metrica-valor">27</span>
+                    <span class="metrica-sub">79% de aproveitamento</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-ouro">
+                    <i class="bi bi-hourglass-split"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Vagas em aberto</span>
+                    <span class="metrica-valor">7</span>
+                    <span class="metrica-sub">aguardando médico</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-roxo">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Médicos cadastrados</span>
+                    <span class="metrica-valor">11 mil</span>
+                    <span class="metrica-sub">na plataforma</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== GRID PRINCIPAL ===== -->
+        <div class="conteudo-grid">
+
+            <!-- ===== COLUNA ESQUERDA ===== -->
+            <div class="col-esquerda">
+
+                <!-- PRÓXIMA VAGA SEM MÉDICO -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-exclamation-circle" style="color:#f5a623; margin-right:6px;"></i>Vaga urgente em aberto</h2>
+                        <a href="plantoesAdmin.html">Ver todas <i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                    <div class="proximo-plantao">
+                        <div class="pp-header pp-header-urgente">
+                            <div class="pp-header-left">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <span>Sem médico confirmado</span>
+                            </div>
+                            <span class="pp-badge-urgente">Em 2 dias</span>
+                        </div>
+
+                        <div class="pp-corpo">
+                            <div class="pp-hospital">
+                                <div class="pp-hosp-icone">
+                                    <i class="bi bi-hospital-fill"></i>
+                                </div>
+                                <div>
+                                    <p class="pp-hosp-nome">Pronto-Socorro — Bloco C</p>
+                                    <p class="pp-hosp-cidade"><i class="bi bi-geo-alt-fill"></i> Morumbi, São Paulo, SP</p>
+                                </div>
+                            </div>
+
+                            <div class="pp-info-lista">
+                                <div class="pp-info-item">
+                                    <i class="bi bi-calendar3"></i>
+                                    <div>
+                                        <span class="pp-info-label">Data</span>
+                                        <span class="pp-info-val">12/06/2026</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-clock"></i>
+                                    <div>
+                                        <span class="pp-info-label">Horário</span>
+                                        <span class="pp-info-val">19:00 — 07:00</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-heart-pulse-fill"></i>
+                                    <div>
+                                        <span class="pp-info-label">Especialidade</span>
+                                        <span class="pp-info-val">Clínica Médica</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-moon-stars"></i>
+                                    <div>
+                                        <span class="pp-info-label">Turno</span>
+                                        <span class="pp-info-val">Noturno</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pp-rodape">
+                            <div>
+                                <p class="pp-valor-label">Valor ofertado</p>
+                                <p class="pp-valor">R$ 1.800,00</p>
+                            </div>
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <span class="pp-espec">Clínica Médica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLANTÕES RECENTES -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-clock-history" style="color:#378ADD; margin-right:6px;"></i>Plantões recentes</h2>
+                        <a href="../PDF/historico_plantoes_einstein.pdf" target="_blank">Ver mais <i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                    <div class="historico-lista">
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-person-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Dr. Alan Ferreira Pereira</p>
+                                <p class="hist-detalhe">
+                                    06/06/2026
+                                    <span class="hist-dot"></span>
+                                    07:00 – 19:00
+                                    <span class="hist-dot"></span>
+                                    Cardiologia
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 2.200</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-person-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Dra. Carla Mendes Sousa</p>
+                                <p class="hist-detalhe">
+                                    05/06/2026
+                                    <span class="hist-dot"></span>
+                                    19:00 – 07:00
+                                    <span class="hist-dot"></span>
+                                    Neurologia
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 1.950</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-person-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Dr. Ricardo Oliveira Lima</p>
+                                <p class="hist-detalhe">
+                                    04/06/2026
+                                    <span class="hist-dot"></span>
+                                    07:00 – 19:00
+                                    <span class="hist-dot"></span>
+                                    Ortopedia
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-cancelado">Cancelado</span>
+                            <span class="hist-valor" style="color:#c0392b;">R$ 0</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-person-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Dra. Fernanda Castro Braga</p>
+                                <p class="hist-detalhe">
+                                    03/06/2026
+                                    <span class="hist-dot"></span>
+                                    19:00 – 07:00
+                                    <span class="hist-dot"></span>
+                                    Pediatria
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 1.750</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===== COLUNA DIREITA ===== -->
+            <div class="col-direita">
+
+                <!-- AÇÃO RÁPIDA: PUBLICAR PLANTÃO -->
+                <div class="publicar-card">
+                    <div class="pub-icone">
+                        <i class="bi bi-plus-circle-fill"></i>
+                    </div>
+                    <div class="pub-texto">
+                        <p class="pub-titulo">Publicar novo plantão</p>
+                        <p class="pub-sub">Encontre o médico ideal rapidamente</p>
+                    </div>
+                    <button class="btn-publicar" onclick="window.location.href='dispoPlantao.html'">
+                        Publicar <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- CALENDÁRIO -->
+                <div class="calendario-card">
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-calendar3" style="color:#378ADD; margin-right:6px;"></i>Calendário</h2>
+                    </div>
+                    <div class="cal-mes">
+                        <button class="cal-nav"><i class="bi bi-chevron-left"></i></button>
+                        <span id="calMesAno"></span>
+                        <button class="cal-nav"><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                    <div class="cal-grid-semanas">
+                        <span class="cal-semana-label">D</span>
+                        <span class="cal-semana-label">S</span>
+                        <span class="cal-semana-label">T</span>
+                        <span class="cal-semana-label">Q</span>
+                        <span class="cal-semana-label">Q</span>
+                        <span class="cal-semana-label">S</span>
+                        <span class="cal-semana-label">S</span>
+                    </div>
+                    <div class="cal-grid" id="calGrid"></div>
+
+                    <!-- Legenda -->
+                    <div class="cal-legenda">
+                        <span class="leg-item"><span class="leg-dot leg-preenchido"></span>Preenchido</span>
+                        <span class="leg-item"><span class="leg-dot leg-aberto"></span>Em aberto</span>
+                        <span class="leg-item"><span class="leg-dot leg-hoje"></span>Hoje</span>
+                    </div>
+                </div>
+
+                <!-- NOTIFICAÇÕES -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-bell" style="color:#378ADD; margin-right:6px;"></i>Notificações</h2>
+                    </div>
+
+                    <div class="notif-lista">
+
+                        <div class="notif-item nova">
+                            <div class="notif-icone ic-notif-azul">
+                                <i class="bi bi-person-check-fill"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Dr. Alan Ferreira aceitou o plantão de Cardiologia</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> Hoje, 09:12</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item urgente">
+                            <div class="notif-icone ic-notif-ouro">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Plantão de Clínica Médica (12/06) ainda sem candidatos</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> Hoje, 08:30</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item">
+                            <div class="notif-icone ic-notif-verde">
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Nova avaliação recebida: 4,1 ⭐ — 1.662 no total</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> 09/06, 17:45</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item">
+                            <div class="notif-icone ic-notif-azul">
+                                <i class="bi bi-file-earmark-check-fill"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Contrato de Dr. Ricardo Lima cancelado — Ortopedia 04/06</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> 04/06, 11:00</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        /* ===== MENU ATIVO ===== */
+        const links = document.querySelectorAll("header nav ul li a");
+        let paginaAtual = window.location.pathname.split("/").pop() || "homeAdmin.html";
+        links.forEach(l => {
+            if (l.getAttribute("href") === paginaAtual) l.classList.add("ativo");
+        });
+
+        /* ===== DATA HOJE ===== */
+        const diasSemana = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+        const mesesNome  = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+        const hoje = new Date();
+        document.getElementById("dataHoje").textContent =
+            `${diasSemana[hoje.getDay()]}, ${hoje.getDate()} de ${mesesNome[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+
+        /* ===== SAUDAÇÃO DINÂMICA ===== */
+        const hora = hoje.getHours();
+        const saudacao = document.querySelector(".bv-saudacao");
+        if (hora >= 5 && hora < 12) saudacao.textContent = "Bom dia 👋";
+        else if (hora < 18) saudacao.textContent = "Boa tarde 👋";
+        else saudacao.textContent = "Boa noite 👋";
+
+        /* ===== CALENDÁRIO =====
+           Verde  = plantão preenchido
+           Laranja = plantão em aberto (sem médico)
+        */
+        const plantoesDias     = [3, 5, 6, 9, 13, 16, 19, 23, 26, 30]; // preenchidos
+        const plantoesSemMedico = [12, 17, 22];                         // em aberto
+        let calAno = hoje.getFullYear(), calMes = hoje.getMonth();
+
+        function renderCal() {
+            document.getElementById("calMesAno").textContent =
+                mesesNome[calMes].charAt(0).toUpperCase() + mesesNome[calMes].slice(1) + " " + calAno;
+
+            const grid = document.getElementById("calGrid");
+            grid.innerHTML = "";
+            const primeiro  = new Date(calAno, calMes, 1).getDay();
+            const totalDias = new Date(calAno, calMes + 1, 0).getDate();
+            const diasAntes = new Date(calAno, calMes, 0).getDate();
+
+            for (let i = 0; i < primeiro; i++) {
+                const d = document.createElement("div");
+                d.className = "cal-dia outro-mes";
+                d.textContent = diasAntes - primeiro + 1 + i;
+                grid.appendChild(d);
+            }
+
+            for (let d = 1; d <= totalDias; d++) {
+                const div = document.createElement("div");
+                const ehHoje      = d === hoje.getDate() && calMes === hoje.getMonth() && calAno === hoje.getFullYear();
+                const preenchido  = plantoesDias.includes(d);
+                const emAberto    = plantoesSemMedico.includes(d);
+
+                let cls = "cal-dia";
+                if (ehHoje)       cls += " hoje";
+                if (preenchido)   cls += " plantao";
+                if (emAberto)     cls += " plantao-aberto";
+                div.className = cls;
+                div.textContent = d;
+                grid.appendChild(div);
+            }
+
+            const resto = (primeiro + totalDias) % 7;
+            if (resto !== 0) {
+                for (let i = 1; i <= 7 - resto; i++) {
+                    const d = document.createElement("div");
+                    d.className = "cal-dia outro-mes";
+                    d.textContent = i;
+                    grid.appendChild(d);
+                }
+            }
+        }
+
+        renderCal();
+        document.querySelectorAll(".cal-nav")[0].onclick = () => { calMes--; if (calMes < 0) { calMes = 11; calAno--; } renderCal(); };
+        document.querySelectorAll(".cal-nav")[1].onclick = () => { calMes++; if (calMes > 11) { calMes = 0; calAno++; } renderCal(); };
+
+        /* ===== SAIR ===== */
+        function sair() {
+            if (confirm("Deseja realmente sair?")) {
+                localStorage.clear();
+                window.location.href = "../user/escolherTipoPerfil.html";
+            }
+        }
+    </script>
+
+</body>
+</html>

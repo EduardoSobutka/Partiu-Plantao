@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Partiu Plantão</title>
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body class="pp-pagina">
+
+    <div class="pp-card">
+
+        <!-- HEADER -->
+        <div class="pp-header">
+            <div class="pp-logo-slot">
+                <img src="../img/Logotipo Partiu Plantão.jpg" alt="logo">
+            </div>
+            <h1 class="pp-titulo">Partiu Plantão</h1>
+            <p class="pp-subtitulo">Disponibilize seu próximo plantão</p>
+        </div>
+
+        <!-- BODY -->
+        <div class="pp-body">
+
+            <h2 class="pp-confirm-titulo">Confirme seu email</h2>
+
+            <!-- Email vindo do localStorage -->
+            <p class="pp-confirm-email" id="emailAdmin"></p>
+
+            <p class="pp-confirm-texto">Enviamos um código para seu email</p>
+
+            <!-- CAMPOS DO CÓDIGO -->
+            <div class="pp-codigo">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+                <input type="text" maxlength="1" placeholder="0" class="codigoinput">
+            </div>
+
+            <!-- BOTÃO CONFIRMAR -->
+            <button class="pp-btn-entrar" onclick="confirmarCodigo()">
+                Confirmar
+            </button>
+
+            <!-- REENVIAR -->
+            <p class="pp-rodape">
+                Não recebeu o código? <a href="#">Reenviar</a>
+            </p>
+
+            <!-- TROCAR EMAIL -->
+            <p class="pp-rodape">
+                <a href="loginAdm.html">Usar outro email</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <button class="botaoVoltar" onclick="window.history.back()">Voltar</button>
+
+
+    <!-- SCRIPT 1: CONTROLE DOS INPUTS -->
+    <script>
+
+        // Seleciona todos os inputs do código
+        const inputs = document.querySelectorAll(".codigoinput");
+
+        // Percorre cada input
+        inputs.forEach((input, index) => {
+
+            // Quando digitar
+            input.addEventListener("input", (e) => {
+
+                const valor = e.target.value;
+
+                // Se digitou 1 caractere, vai pro próximo
+                if (valor.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            // Quando apertar tecla
+            input.addEventListener("keydown", (e) => {
+
+                // Se apertar backspace e estiver vazio, volta
+                if (e.key === "Backspace" &&
+                    input.value === "" &&
+                    index > 0) {
+
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+    </script>
+
+    <!-- SCRIPT 2: LÓGICA DO CÓDIGO -->
+    <script>
+
+        // Pega email salvo no cadastro
+        let email = localStorage.getItem("emailCadastro");
+
+        // Mostra na tela
+        if (email) {
+            document.getElementById("emailAdmin").textContent = email;
+        }
+
+        // FUNÇÃO CONFIRMAR
+        function confirmarCodigo() {
+
+            const inputs = document.querySelectorAll(".codigoinput");
+
+            let codigo = "";
+
+            // Junta todos os números digitados
+            inputs.forEach(input => {
+                codigo += input.value;
+            });
+
+            // Verifica se digitou os 6 números
+            if (codigo.length < 6) {
+                alert("Digite o código completo.");
+                return;
+            }
+
+            // Sucesso
+            alert("✅ E-mail confirmado com sucesso!");
+
+            // Redireciona
+            window.location.href = "homeAdmin.html";
+        }
+
+    </script>
+</body>
+
+</html>

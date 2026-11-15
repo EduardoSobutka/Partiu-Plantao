@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão - Home</title>
+    <link rel="stylesheet" href="../css/homeUser.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Partiu Plantão">
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="home.html" class="ativo">Home</a></li>
+                <li><a href="plantoes.html">Plantões</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- BOAS-VINDAS -->
+        <div class="boas-vindas">
+            <div class="bv-texto">
+                <p class="bv-saudacao">Bom dia 👋</p>
+                <h1 class="bv-nome">Dr. Alan Ferreira Pereira</h1>
+                <p class="bv-data">
+                    <i class="bi bi-calendar3"></i>
+                    <span id="dataHoje"></span>
+                </p>
+            </div>
+            <div class="bv-avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <div class="metricas-row">
+            <div class="metrica-card">
+                <div class="metrica-icone ic-azul">
+                    <i class="bi bi-calendar2-check"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Plantões realizados</span>
+                    <span class="metrica-valor">56</span>
+                    <span class="metrica-sub">total realizados</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-ouro">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Horas trabalhadas</span>
+                    <span class="metrica-valor">672h</span>
+                    <span class="metrica-sub">total acumulado</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-verde">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Média por plantão</span>
+                    <span class="metrica-valor">R$ 1.670</span>
+                    <span class="metrica-sub">média por plantão</span>
+                </div>
+            </div>
+
+            <div class="metrica-card">
+                <div class="metrica-icone ic-roxo">
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <div class="metrica-info">
+                    <span class="metrica-label">Avaliação</span>
+                    <span class="metrica-valor">4,8</span>
+                    <span class="metrica-sub">1.825 avaliações</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID PRINCIPAL -->
+        <div class="conteudo-grid">
+
+            <!-- COLUNA ESQUERDA -->
+            <div class="col-esquerda" style="display:flex; flex-direction:column; gap:20px;">
+
+                <!-- PRÓXIMO PLANTÃO -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-calendar-event" style="color:#378ADD; margin-right:6px;"></i>Próximo Plantão</h2>
+                        <a href="plantoes.html">Ver todos <i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                    <div class="proximo-plantao">
+                        <div class="pp-header">
+                            <div class="pp-header-left">
+                                <i class="bi bi-hospital"></i>
+                                <span>Plantão confirmado</span>
+                            </div>
+                            <span class="pp-badge-dias">Em 5 dias</span>
+                        </div>
+
+                        <div class="pp-corpo">
+                            <div class="pp-hospital">
+                                <div class="pp-hosp-icone">
+                                    <i class="bi bi-hospital-fill"></i>
+                                </div>
+                                <div>
+                                    <p class="pp-hosp-nome">UPA Casa Verde</p>
+                                    <p class="pp-hosp-cidade"><i class="bi bi-geo-alt-fill"></i> São Paulo, SP</p>
+                                </div>
+                            </div>
+
+                            <div class="pp-info-lista">
+                                <div class="pp-info-item">
+                                    <i class="bi bi-calendar3"></i>
+                                    <div>
+                                        <span class="pp-info-label">Data</span>
+                                        <span class="pp-info-val">15/05/2026</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-clock"></i>
+                                    <div>
+                                        <span class="pp-info-label">Horário</span>
+                                        <span class="pp-info-val">18:30 — 20:00</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-person-badge"></i>
+                                    <div>
+                                        <span class="pp-info-label">Especialidade</span>
+                                        <span class="pp-info-val">Clínica Geral</span>
+                                    </div>
+                                </div>
+                                <div class="pp-info-item">
+                                    <i class="bi bi-moon-stars"></i>
+                                    <div>
+                                        <span class="pp-info-label">Turno</span>
+                                        <span class="pp-info-val">Noturno</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pp-rodape">
+                            <div>
+                                <p class="pp-valor-label">Valor</p>
+                                <p class="pp-valor">R$ 1.670,00</p>
+                            </div>
+                            <span class="pp-espec">Clínica Geral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HISTÓRICO RECENTE -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-clock-history" style="color:#378ADD; margin-right:6px;"></i>Histórico Recente</h2>
+                        <a href="../PDF/historico_plantoes_alan.pdf" target="_blank">Ver mais <i class="bi bi-arrow-right"></i></a>
+                    </div>
+
+                    <div class="historico-lista">
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-hospital-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">UPA Zona Sul</p>
+                                <p class="hist-detalhe">
+                                    09/06/2026
+                                    <span class="hist-dot"></span>
+                                    14:00 – 02:00
+                                    <span class="hist-dot"></span>
+                                    Neurocirurgia
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 1.500</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-hospital-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Hospital Albert Einstein</p>
+                                <p class="hist-detalhe">
+                                    07/06/2026
+                                    <span class="hist-dot"></span>
+                                    07:00 – 19:00
+                                    <span class="hist-dot"></span>
+                                    Cardiologia
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 2.100</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-hospital-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Hospital das Clínicas</p>
+                                <p class="hist-detalhe">
+                                    06/06/2026
+                                    <span class="hist-dot"></span>
+                                    22:00 – 07:00
+                                    <span class="hist-dot"></span>
+                                    Emergência
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-cancelado">Cancelado</span>
+                            <span class="hist-valor" style="color:#c0392b;">R$ 0</span>
+                        </div>
+
+                        <div class="hist-item">
+                            <div class="hist-icone"><i class="bi bi-hospital-fill"></i></div>
+                            <div class="hist-info">
+                                <p class="hist-nome">Hospital das Clínicas</p>
+                                <p class="hist-detalhe">
+                                    06/06/2026
+                                    <span class="hist-dot"></span>
+                                    08:00 – 20:00
+                                    <span class="hist-dot"></span>
+                                    Clínica Geral
+                                </p>
+                            </div>
+                            <span class="hist-badge badge-concluido">Concluído</span>
+                            <span class="hist-valor">R$ 1.900</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="col-direita">
+
+                <!-- CALENDÁRIO -->
+                <div class="calendario-card">
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-calendar3" style="color:#378ADD; margin-right:6px;"></i>Calendário</h2>
+                    </div>
+                    <div class="cal-mes">
+                        <button class="cal-nav"><i class="bi bi-chevron-left"></i></button>
+                        <span id="calMesAno"></span>
+                        <button class="cal-nav"><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                    <div class="cal-grid-semanas">
+                        <span class="cal-semana-label">D</span>
+                        <span class="cal-semana-label">S</span>
+                        <span class="cal-semana-label">T</span>
+                        <span class="cal-semana-label">Q</span>
+                        <span class="cal-semana-label">Q</span>
+                        <span class="cal-semana-label">S</span>
+                        <span class="cal-semana-label">S</span>
+                    </div>
+                    <div class="cal-grid" id="calGrid"></div>
+                </div>
+
+                <!-- NOTIFICAÇÕES -->
+                <div>
+                    <div class="secao-titulo">
+                        <h2><i class="bi bi-bell" style="color:#378ADD; margin-right:6px;"></i>Notificações</h2>
+                    </div>
+
+                    <div class="notif-lista">
+                        <div class="notif-item nova">
+                            <div class="notif-icone ic-notif-azul">
+                                <i class="bi bi-check2-circle"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Plantão confirmado na UPA Casa Verde</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> Hoje, 09:12</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item urgente">
+                            <div class="notif-icone ic-notif-ouro">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Plantão urgente disponível no Hospital Santa Cruz</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> Hoje, 08:47</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item">
+                            <div class="notif-icone ic-notif-verde">
+                                <i class="bi bi-cash"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Pagamento de R$ 1.900,00 processado</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> 06/06, 18:30</p>
+                            </div>
+                        </div>
+
+                        <div class="notif-item">
+                            <div class="notif-icone ic-notif-azul">
+                                <i class="bi bi-star"></i>
+                            </div>
+                            <div class="notif-texto">
+                                <p class="notif-titulo">Nova avaliação recebida: 4,8 ⭐ — 1.825 no total</p>
+                                <p class="notif-hora"><i class="bi bi-clock" style="font-size:10px;"></i> 09/06, 21:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        /* ===== MENU ATIVO ===== */
+        const links = document.querySelectorAll("header nav ul li a");
+        let paginaAtual = window.location.pathname.split("/").pop() || "home.html";
+        links.forEach(l => {
+            if (l.getAttribute("href") === paginaAtual) l.classList.add("ativo");
+        });
+
+        /* ===== DATA HOJE ===== */
+        const diasSemana = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+        const mesesNome  = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+        const hoje = new Date();
+        document.getElementById("dataHoje").textContent =
+            `${diasSemana[hoje.getDay()]}, ${hoje.getDate()} de ${mesesNome[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+
+        /* ===== CALENDÁRIO ===== */
+        const plantoesDias = [5, 10, 15, 20, 25]; // dias com plantão (exemplo)
+        let calAno = hoje.getFullYear(), calMes = hoje.getMonth();
+
+        function renderCal() {
+            document.getElementById("calMesAno").textContent =
+                mesesNome[calMes].charAt(0).toUpperCase() + mesesNome[calMes].slice(1) + " " + calAno;
+
+            const grid = document.getElementById("calGrid");
+            grid.innerHTML = "";
+            const primeiro = new Date(calAno, calMes, 1).getDay();
+            const totalDias = new Date(calAno, calMes + 1, 0).getDate();
+            const diasAntes = new Date(calAno, calMes, 0).getDate();
+
+            for (let i = 0; i < primeiro; i++) {
+                const d = document.createElement("div");
+                d.className = "cal-dia outro-mes";
+                d.textContent = diasAntes - primeiro + 1 + i;
+                grid.appendChild(d);
+            }
+            for (let d = 1; d <= totalDias; d++) {
+                const div = document.createElement("div");
+                const ehHoje = d === hoje.getDate() && calMes === hoje.getMonth() && calAno === hoje.getFullYear();
+                const temPlantao = plantoesDias.includes(d);
+                div.className = "cal-dia" + (ehHoje && temPlantao ? " plantao-hoje" : ehHoje ? " hoje" : temPlantao ? " plantao" : "");
+                div.textContent = d;
+                grid.appendChild(div);
+            }
+            const resto = (primeiro + totalDias) % 7;
+            if (resto !== 0) {
+                for (let i = 1; i <= 7 - resto; i++) {
+                    const d = document.createElement("div");
+                    d.className = "cal-dia outro-mes";
+                    d.textContent = i;
+                    grid.appendChild(d);
+                }
+            }
+        }
+
+        renderCal();
+        document.querySelectorAll(".cal-nav")[0].onclick = () => { calMes--; if (calMes < 0) { calMes = 11; calAno--; } renderCal(); };
+        document.querySelectorAll(".cal-nav")[1].onclick = () => { calMes++; if (calMes > 11) { calMes = 0; calAno++; } renderCal(); };
+
+        /* ===== SAUDAÇÃO DINÂMICA ===== */
+        const hora = hoje.getHours();
+        const saudacao = document.querySelector(".bv-saudacao");
+        if (hora >= 5 && hora < 12) saudacao.textContent = "Bom dia 👋";
+        else if (hora < 18) saudacao.textContent = "Boa tarde 👋";
+        else saudacao.textContent = "Boa noite 👋";
+    </script>
+</body>
+</html>

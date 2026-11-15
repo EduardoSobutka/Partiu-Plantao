@@ -1,0 +1,232 @@
+/* Reset básico para remover padrões do navegador */
+* {
+  margin: 0;
+  /* Remove margens padrão */
+  padding: 0;
+  /* Remove espaçamentos internos padrão */
+  box-sizing: border-box;
+  /* Faz padding e border não aumentarem o tamanho do elemento */
+  text-decoration: none;
+  /* Remove sublinhado de links */
+  font-family: "Poppins", sans-serif;
+  /* Define a fonte padrão */
+}
+
+/* Estilização do body */
+.body-dispoPlantao {
+  background-color: #073454;
+  min-height: 100vh;
+}
+
+/* Container principal */
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(7, 52, 84, 0.08);
+}
+
+/* Cabeçalho */
+.topo {
+  position: relative;
+  margin-bottom: 35px;
+}
+
+/* Link de voltar */
+.voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #378ADD;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.voltar:hover {
+  color: #073454;
+}
+
+/* Título principal */
+.topo h1 {
+  color: #073454;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* Subtítulo */
+.topo p {
+  margin-top: 6px;
+  color: #85B7EB;
+  font-size: 15px;
+}
+
+/* Área principal com formulário + lado direito */
+.conteudo {
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+}
+
+/* Área do formulário */
+.formulario {
+  flex: 1;
+}
+
+/* Labels dos inputs */
+.formulario label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  color: #073454;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Linha com inputs lado a lado */
+.linha {
+  display: flex;
+  /* Coloca os elementos em linha */
+  align-items: center;
+  gap: 10px;
+  /* Espaço entre os elementos */
+}
+
+/* Inputs e selects padrão */
+input,
+select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #B5D4F4;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #073454;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #378ADD;
+  box-shadow: 0 0 0 3px rgba(55, 138, 221, 0.12);
+}
+
+/* Inputs dentro de .linha (metade do tamanho) */
+.linha input {
+  width: 45%;
+  /* Divide o espaço entre dois inputs */
+}
+
+/* Lado direito da tela (imagem + botão) */
+.lado-direito {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 2px 14px rgba(7, 52, 84, 0.07);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Imagem do lado direito */
+.lado-direito img {
+  width: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Botão padrão */
+button {
+  width: 100%;
+  height: 48px;
+  background-color: #073454;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 4px 12px rgba(7, 52, 84, 0.20);
+}
+
+button:hover {
+  background-color: #0C447C;
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ===== GRUPOS DE OPÇÕES (CONTRATO / URGÊNCIA) ===== */
+.opcoes-grupo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+.opcao-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 10px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  user-select: none;
+  text-align: center;
+}
+
+.opcao-card input[type="radio"] {
+  display: none;
+}
+
+.opcao-card:hover {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+/* Estado selecionado — padrão (azul) */
+.opcao-card.selecionado {
+  border-color: #073454;
+  background: #e6f1fb;
+  box-shadow: 0 0 0 3px rgba(7, 52, 84, 0.10);
+}
+
+/* Estado selecionado — urgente (laranja) */
+.opcao-card.opcao-urgente.selecionado {
+  border-color: #b45309;
+  background: #fff8ec;
+  box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.12);
+}
+
+.opcao-icone {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.opcao-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #073454;
+}
+
+.opcao-sub {
+  font-size: 10.5px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Badge urgente no lado direito (opcional visual) */
+.opcao-card.opcao-urgente.selecionado .opcao-titulo {
+  color: #b45309;
+}

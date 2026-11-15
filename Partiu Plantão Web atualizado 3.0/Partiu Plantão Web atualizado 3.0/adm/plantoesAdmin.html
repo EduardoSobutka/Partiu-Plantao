@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/plantoesAdmin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Partiu Plantão">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="homeAdmin.html">Home</a></li>
+                <li><a href="plantoes.html" class="ativo">Plantões</a></li>
+                <li><a href="perfilAdmin.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ===== BARRA SUPERIOR ===== -->
+        <div class="pl-topbar">
+            <div class="pl-topbar-titulo">
+                <h1 id="tituloAba">Plantões</h1>
+                <span class="pl-contador" id="contador">0 encontrados</span>
+            </div>
+            <div class="pl-topbar-acoes">
+                <div class="pl-busca-wrap">
+                    <i class="bi bi-search pl-busca-icone"></i>
+                    <input type="text" class="pl-busca" id="inputBusca" placeholder="Buscar por médico ou local…"
+                        oninput="renderizar()">
+                </div>
+                <a href="dispoPlantao.html" class="btn-novo-plantao">
+                    <i class="bi bi-plus-lg"></i>
+                    Novo plantão
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== TABS DE STATUS ===== -->
+        <div class="pl-filtros-wrap">
+            <div class="pl-tabs">
+                <button class="pl-tab" id="tab-confirmados" onclick="mudarAba('confirmados')">
+                    <i class="bi bi-check-circle-fill"></i> Confirmados
+                </button>
+                <button class="pl-tab" id="tab-disponiveis" onclick="mudarAba('disponiveis')">
+                    <i class="bi bi-calendar2-plus"></i> Disponíveis
+                </button>
+                <button class="pl-tab" id="tab-solicitados" onclick="mudarAba('solicitados')">
+                    <i class="bi bi-hourglass-split"></i> Solicitados
+                </button>
+            </div>
+            <button class="btn-pdf" id="btnPdf" onclick="gerarRelatorio()">
+                <i class="bi bi-file-earmark-pdf"></i>
+                Baixar Relatório
+            </button>
+        </div>
+
+        <!-- ===== GRID DE CARDS ===== -->
+        <div class="pl-grid" id="grid"></div>
+
+        <!-- ===== ESTADO VAZIO ===== -->
+        <div class="pl-vazio" id="vazio" style="display:none;">
+            <i class="bi bi-calendar-x" id="vazioIcone"></i>
+            <p id="vazioTitulo">Nenhum plantão encontrado</p>
+            <span id="vazioDesc">Nenhum resultado para exibir.</span>
+            <a href="dispoPlantao.html" class="btn-novo-plantao" id="vazioBtn" style="margin-top:8px; display:none;">
+                <i class="bi bi-plus-lg"></i> Disponibilizar plantão
+            </a>
+        </div>
+
+    </main>
+
+    <!-- ===== MODAL (REMOVER / RECUSAR) ===== -->
+    <div class="pl-modal-overlay" id="overlay" onclick="fecharModal()"></div>
+    <div class="pl-modal" id="modal">
+        <div class="pl-modal-header pl-modal-header-danger">
+            <i class="bi bi-trash3-fill" id="modalIcone"></i>
+            <h2 id="modalTitulo">Remover plantão</h2>
+        </div>
+        <div class="pl-modal-corpo">
+            <div class="pl-modal-info" id="modalCorpo"></div>
+        </div>
+        <div class="pl-modal-acoes">
+            <button class="pl-modal-cancelar" onclick="fecharModal()">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </button>
+            <button class="pl-modal-danger" id="btnConfirmarModal" onclick="confirmarAcaoModal()">
+                <i class="bi bi-trash3"></i> Remover
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="pl-toast" id="toast">
+        <i class="bi bi-check-circle-fill"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+
+        // ─── ESTADO ───────────────────────────────────────────────
+        let abaAtiva = 'confirmados';
+        let acaoModal = null; // { tipo: 'remover' | 'recusar', id }
+
+        // IDs recusados nesta sessão (some ao recarregar a página — comportamento pedido)
+        const recusadosNaSessao = new Set();
+
+        // ─── DADOS DE DEMONSTRAÇÃO ────────────────────────────────
+        // Representam solicitações vindas dos médicos — sempre voltam ao recarregar
+        const DEMO_PLANTOES = [
+            {
+                id: 'demo-disp-1',
+                nome: 'Dr. Carlos Mendes',
+                local: 'Hospital Israelita Albert Einstein',
+                especialidade: 'Cardiologia',
+                data: '14/06/2026',
+                horario: '08:00 — 17:00',
+                horas: 9,
+                contrato: 'PJ',
+                crm: 'CRM-SP 48.201',
+                endereco: 'Av. Albert Einstein, 627/701 — Morumbi SP',
+                valor: 'R$ 1.200,00',
+                status: 'disponivel'
+            },
+            {
+                id: 'demo-soli-1',
+                nome: 'Dra. Ana Paula Ferreira',
+                local: 'Hospital Israelita Albert Einstein',
+                especialidade: 'Clínica Geral',
+                data: '15/06/2026',
+                horario: '19:00 — 07:00',
+                horas: 12,
+                contrato: 'PJ',
+                crm: 'CRM-SP 52.774',
+                endereco: 'Av. Albert Einstein, 627/701 — Morumbi SP',
+                valor: 'R$ 1.500,00',
+                status: 'solicitado'
+            },
+            {
+                id: 'demo-soli-2',
+                nome: 'Dr. Rafael Lima',
+                local: 'Hospital Israelita Albert Einstein',
+                especialidade: 'Pronto-socorro',
+                data: '16/06/2026',
+                horario: '07:00 — 19:00',
+                horas: 12,
+                contrato: 'PJ',
+                crm: 'CRM-SP 61.005',
+                endereco: 'Av. Albert Einstein, 627/701 — Morumbi SP',
+                valor: 'R$ 1.100,00',
+                status: 'solicitado'
+            }
+        ];
+
+        // ─── LOCALSTORAGE ─────────────────────────────────────────
+        function carregarPlantoes() {
+            return JSON.parse(localStorage.getItem('plantoes')) || [];
+        }
+
+        function salvarPlantoes(lista) {
+            localStorage.setItem('plantoes', JSON.stringify(lista));
+        }
+
+        // ─── INICIALIZAR ──────────────────────────────────────────
+        function inicializar() {
+            // A cada carregamento de página, reinjeta os DEMOs que não existem
+            // na lista salva (IDs recusados some com o Set ao recarregar)
+            const salvos = JSON.parse(localStorage.getItem('plantoes')) || [];
+            const idsSalvos = new Set(salvos.map(p => p.id));
+
+            const merged = [...salvos];
+            for (const demo of DEMO_PLANTOES) {
+                if (!idsSalvos.has(demo.id)) {
+                    merged.push({ ...demo });
+                }
+            }
+            salvarPlantoes(merged);
+
+            // Lê aba pelo hash da URL
+            const hash = window.location.hash.replace('#', '');
+            const abas = ['confirmados', 'disponiveis', 'solicitados'];
+            mudarAba(abas.includes(hash) ? hash : 'confirmados');
+        }
+
+        // ─── MUDAR ABA ────────────────────────────────────────────
+        function mudarAba(aba) {
+            abaAtiva = aba;
+            ['confirmados', 'disponiveis', 'solicitados'].forEach(t => {
+                document.getElementById('tab-' + t).classList.toggle('ativo', t === aba);
+            });
+            // Botão PDF só em Confirmados
+            document.getElementById('btnPdf').style.display = (aba === 'confirmados') ? '' : 'none';
+            window.location.hash = aba;
+            renderizar();
+        }
+
+        // ─── RENDERIZAR ───────────────────────────────────────────
+        function renderizar() {
+            const busca = document.getElementById('inputBusca').value.toLowerCase();
+            const todos = carregarPlantoes();
+
+            const statusMap = {
+                confirmados: 'confirmado',
+                disponiveis: 'disponivel',
+                solicitados: 'solicitado'
+            };
+            const statusAlvo = statusMap[abaAtiva];
+
+            let lista = todos.filter(p => p.status === statusAlvo);
+            if (busca) {
+                lista = lista.filter(p =>
+                    (p.nome || '').toLowerCase().includes(busca) ||
+                    (p.local || '').toLowerCase().includes(busca) ||
+                    (p.endereco || '').toLowerCase().includes(busca)
+                );
+            }
+
+            // Título da aba
+            const tituloMap = {
+                confirmados: 'Plantões Confirmados',
+                disponiveis: 'Plantões Disponíveis',
+                solicitados: 'Plantões Solicitados'
+            };
+            document.getElementById('tituloAba').textContent = tituloMap[abaAtiva];
+
+            const grid = document.getElementById('grid');
+            const vazio = document.getElementById('vazio');
+            const cont = document.getElementById('contador');
+
+            if (lista.length === 0) {
+                grid.innerHTML = '';
+                vazio.style.display = 'flex';
+                const vazioMap = {
+                    confirmados: {
+                        titulo: 'Nenhum plantão confirmado',
+                        desc: 'Aceite plantões solicitados para que apareçam aqui.',
+                        btn: false
+                    },
+                    disponiveis: {
+                        titulo: 'Nenhum plantão disponível',
+                        desc: 'Disponibilize novos plantões para os médicos.',
+                        btn: true
+                    },
+                    solicitados: {
+                        titulo: 'Nenhum plantão solicitado',
+                        desc: 'Os médicos ainda não solicitaram plantões.',
+                        btn: false
+                    }
+                };
+                const info = vazioMap[abaAtiva];
+                document.getElementById('vazioTitulo').textContent = info.titulo;
+                document.getElementById('vazioDesc').textContent = info.desc;
+                document.getElementById('vazioBtn').style.display = info.btn ? '' : 'none';
+            } else {
+                vazio.style.display = 'none';
+                grid.innerHTML = lista.map(p => renderCard(p)).join('');
+            }
+
+            const s = lista.length === 1 ? 'encontrado' : 'encontrados';
+            cont.textContent = `${lista.length} ${s}`;
+        }
+
+        // ─── CARDS ────────────────────────────────────────────────
+        function renderCard(p) {
+            if (p.status === 'confirmado') return cardConfirmado(p);
+            if (p.status === 'disponivel') return cardDisponivel(p);
+            if (p.status === 'solicitado') return cardSolicitado(p);
+            return '';
+        }
+
+        function formatarEnderecoCard(endereco) {
+            if (!endereco) return 'Endereço não informado';
+
+            // pega apenas o que vem depois do traço
+            if (endereco.includes('—')) {
+                endereco = endereco.split('—')[1];
+            }
+
+            // remove CEP
+            endereco = endereco.replace(/\d{5}-\d{3}/g, '');
+
+            // remove traços sobrando
+            endereco = endereco.replace(/\s*-\s*$/, '');
+
+            return endereco.trim();
+        }
+
+        function cardConfirmado(p) {
+            return `
+            <div class="pl-card">
+                <div class="pl-card-topo">
+                    <div class="pl-hospital-info">
+                        <div class="pl-hosp-icone"><i class="bi bi-hospital-fill"></i></div>
+                        <div class="pl-hosp-texto">
+                            <h3 class="pl-hosp-nome">${p.local || 'Local não informado'}</h3>
+                            <p class="pl-hosp-cidade"><i class="bi bi-geo-alt-fill"></i><span>${formatarEnderecoCard(p.endereco)}</span></p>
+                        </div>
+                    </div>
+                    <div class="pl-card-badges">
+                        <span class="pl-badge pl-badge-confirmado">
+                            <i class="bi bi-check-circle-fill"></i>Confirmado
+                        </span>
+                    </div>
+                </div>
+                <div class="pl-card-corpo">
+                    <span class="pl-espec-tag"><i class="bi bi-person-fill"></i> ${p.nome || 'Médico não informado'}</span>
+                    <div class="pl-info-lista">
+                        <div class="pl-info-item"><i class="bi bi-calendar3"></i><span>${p.data}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-clock"></i><span>${p.horario}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-file-earmark-person"></i><span>Contrato ${p.contrato || 'PJ'}</span></div>
+                    </div>
+                </div>
+                <div class="pl-card-rodape">
+                    <div class="pl-valor-wrap">
+                        <span class="pl-valor-label">Valor do plantão</span>
+                        <span class="pl-valor">${p.valor}</span>
+                    </div>
+                    <button class="pl-btn-remover" onclick="abrirModalRemover('${p.id}')">
+                        <i class="bi bi-trash3"></i> Remover
+                    </button>
+                </div>
+            </div>`;
+        }
+
+        function cardDisponivel(p) {
+            return `
+            <div class="pl-card">
+                <div class="pl-card-topo">
+                    <div class="pl-hospital-info">
+                        <div class="pl-hosp-icone"><i class="bi bi-hospital-fill"></i></div>
+                        <div class="pl-hosp-texto">
+                            <h3 class="pl-hosp-nome">${p.local || 'Local não informado'}</h3>
+                            <p class="pl-hosp-cidade"><i class="bi bi-geo-alt-fill"></i><span>${formatarEnderecoCard(p.endereco)}</span></p>
+                        </div>
+                    </div>
+                    <div class="pl-card-badges">
+                        <span class="pl-badge pl-badge-disponivel">
+                            <i class="bi bi-calendar2-plus"></i>Disponível
+                        </span>
+                    </div>
+                </div>
+                <div class="pl-card-corpo">
+                    <span class="pl-espec-tag">${p.especialidade || p.local || 'Especialidade não informada'}</span>
+                    <div class="pl-info-lista">
+                        <div class="pl-info-item"><i class="bi bi-calendar3"></i><span>${p.data}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-clock"></i><span>${p.horario}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-file-earmark-person"></i><span>Contrato ${p.contrato || 'PJ'}</span></div>
+                    </div>
+                </div>
+                <div class="pl-card-rodape">
+                    <div class="pl-valor-wrap">
+                        <span class="pl-valor-label">Valor do plantão</span>
+                        <span class="pl-valor">${p.valor}</span>
+                    </div>
+                    <button class="pl-btn-remover" onclick="abrirModalRemover('${p.id}')">
+                        <i class="bi bi-trash3"></i> Remover
+                    </button>
+                </div>
+            </div>`;
+        }
+
+        function cardSolicitado(p) {
+            return `
+            <div class="pl-card">
+                <div class="pl-card-topo">
+                    <div class="pl-hospital-info">
+                        <div class="pl-hosp-icone"><i class="bi bi-hospital-fill"></i></div>
+                        <div class="pl-hosp-texto">
+                            <h3 class="pl-hosp-nome">${p.local || 'Local não informado'}</h3>
+                            <p class="pl-hosp-cidade"><i class="bi bi-geo-alt-fill"></i><span>${formatarEnderecoCard(p.endereco)}</span></p>
+                        </div>
+                    </div>
+                    <div class="pl-card-badges">
+                        <span class="pl-badge pl-badge-solicitado">
+                            <i class="bi bi-hourglass-split"></i>Solicitado
+                        </span>
+                    </div>
+                </div>
+                <div class="pl-card-corpo">
+                    <span class="pl-espec-tag"><i class="bi bi-person-fill"></i> ${p.nome || 'Médico não informado'}</span>
+                    <div class="pl-info-lista">
+                        <div class="pl-info-item"><i class="bi bi-calendar3"></i><span>${p.data}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-clock"></i><span>${p.horario}</span></div>
+                        <div class="pl-info-item"><i class="bi bi-file-earmark-person"></i><span>Contrato ${p.contrato || 'PJ'}</span></div>
+                    </div>
+                </div>
+                <div class="pl-card-rodape">
+                    <div class="pl-valor-wrap">
+                        <span class="pl-valor-label">Valor do plantão</span>
+                        <span class="pl-valor">${p.valor}</span>
+                    </div>
+                    <div class="pl-card-acoes">
+                        <button class="pl-btn-recusar" onclick="abrirModalRecusar('${p.id}')">
+                            <i class="bi bi-x-lg"></i> Recusar
+                        </button>
+                        <button class="pl-btn-aceitar" onclick="aceitarPlantao('${p.id}')">
+                            <i class="bi bi-check-lg"></i> Aceitar
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // ─── ACEITAR (direto, sem modal) ──────────────────────────
+        function aceitarPlantao(id) {
+            const lista = carregarPlantoes();
+            const idx = lista.findIndex(p => p.id === id);
+            if (idx === -1) return;
+            lista[idx].status = 'confirmado';
+            salvarPlantoes(lista);
+            mostrarToast('Plantão aceito e movido para Confirmados');
+            renderizar();
+        }
+
+        // ─── MODAL REMOVER ────────────────────────────────────────
+        function abrirModalRemover(id) {
+            const p = carregarPlantoes().find(x => x.id === id);
+            if (!p) return;
+            acaoModal = { tipo: 'remover', id };
+
+            document.getElementById('modalTitulo').textContent = 'Remover plantão';
+            document.getElementById('modalIcone').className = 'bi bi-trash3-fill';
+            document.getElementById('btnConfirmarModal').innerHTML = '<i class="bi bi-trash3"></i> Remover';
+
+            document.getElementById('modalCorpo').innerHTML = `
+                <div class="pl-modal-linha">
+                    <i class="bi bi-person-fill"></i>
+                    <div>
+                        <span class="pl-modal-label">Médico / Local</span>
+                        <span class="pl-modal-val">${p.nome || p.local || '-'}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-calendar3"></i>
+                    <div>
+                        <span class="pl-modal-label">Período</span>
+                        <span class="pl-modal-val">${p.data}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                        <span class="pl-modal-label">Horário</span>
+                        <span class="pl-modal-val">${p.horario}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-alerta">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>Esta ação não pode ser desfeita.</span>
+                </div>
+            `;
+            abrirModal();
+        }
+
+        // ─── MODAL RECUSAR ────────────────────────────────────────
+        function abrirModalRecusar(id) {
+            const p = carregarPlantoes().find(x => x.id === id);
+            if (!p) return;
+            acaoModal = { tipo: 'recusar', id };
+
+            document.getElementById('modalTitulo').textContent = 'Recusar solicitação';
+            document.getElementById('modalIcone').className = 'bi bi-x-circle-fill';
+            document.getElementById('btnConfirmarModal').innerHTML = '<i class="bi bi-x-lg"></i> Recusar';
+
+            document.getElementById('modalCorpo').innerHTML = `
+                <div class="pl-modal-linha">
+                    <i class="bi bi-person-fill"></i>
+                    <div>
+                        <span class="pl-modal-label">Médico</span>
+                        <span class="pl-modal-val">${p.nome || '-'}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-calendar3"></i>
+                    <div>
+                        <span class="pl-modal-label">Período</span>
+                        <span class="pl-modal-val">${p.data}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                        <span class="pl-modal-label">Horário</span>
+                        <span class="pl-modal-val">${p.horario}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-alerta">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>A solicitação será recusada e removida da lista.</span>
+                </div>
+            `;
+            abrirModal();
+        }
+
+        function abrirModal() {
+            document.getElementById('overlay').classList.add('ativo');
+            document.getElementById('modal').classList.add('ativo');
+        }
+
+        function fecharModal() {
+            document.getElementById('overlay').classList.remove('ativo');
+            document.getElementById('modal').classList.remove('ativo');
+            acaoModal = null;
+        }
+
+        function confirmarAcaoModal() {
+            if (!acaoModal) return;
+            const lista = carregarPlantoes();
+            const idx = lista.findIndex(p => p.id === acaoModal.id);
+            if (idx === -1) { fecharModal(); return; }
+
+            lista.splice(idx, 1);
+            salvarPlantoes(lista);
+
+            const msg = acaoModal.tipo === 'recusar'
+                ? 'Solicitação recusada'
+                : 'Plantão removido com sucesso';
+
+            fecharModal();
+            mostrarToast(msg);
+            renderizar();
+        }
+
+        // ─── TOAST ────────────────────────────────────────────────
+        function mostrarToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('ativo');
+            setTimeout(() => toast.classList.remove('ativo'), 3500);
+        }
+
+        // ─── GERAR RELATÓRIO PDF (só Confirmados) ─────────────────
+        function gerarRelatorio() {
+            const plantoes = carregarPlantoes().filter(p => p.status === 'confirmado');
+            if (plantoes.length === 0) {
+                mostrarToast('Nenhum plantão confirmado para exportar');
+                return;
+            }
+
+            const linhas = plantoes.map(p => [
+                p.nome || '-',
+                p.data || '-',
+                p.horario || '-',
+                p.local || '-',
+                p.valor || '-'
+            ]);
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFillColor(7, 52, 84);
+            doc.rect(0, 0, 210, 28, "F");
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            doc.text("Partiu Plantão", 14, 12);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text("Relatório de Plantões Confirmados", 14, 21);
+
+            const agora = new Date().toLocaleString("pt-BR");
+            doc.setTextColor(100, 100, 100);
+            doc.setFontSize(8);
+            doc.text("Gerado em: " + agora, 14, 35);
+
+            doc.autoTable({
+                startY: 40,
+                head: [["Médico", "Data", "Horário", "Local", "Remuneração"]],
+                body: linhas,
+                headStyles: {
+                    fillColor: [11, 53, 88],
+                    textColor: 255,
+                    fontStyle: "bold",
+                    halign: "center"
+                },
+                alternateRowStyles: { fillColor: [243, 243, 243] },
+                styles: { fontSize: 9, cellPadding: 4 }
+            });
+
+            const total = plantoes.reduce((acc, p) => {
+                const v = parseFloat(
+                    (p.valor || '')
+                        .replace("R$", "")
+                        .replace(/\s/g, "")
+                        .replace(/\./g, "")
+                        .replace(",", ".")
+                );
+                return acc + (isNaN(v) ? 0 : v);
+            }, 0);
+
+            const totalFmt = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            const y = doc.lastAutoTable.finalY + 8;
+            doc.setFontSize(9);
+            doc.setTextColor(40, 40, 40);
+            doc.text(`Total: ${plantoes.length} plantão(ões)  |  Remuneração total: ${totalFmt}`, 14, y);
+
+            doc.save("relatorio_plantoes_confirmados.pdf");
+        }
+
+        // ─── INICIAR ──────────────────────────────────────────────
+        inicializar();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/perfilUser.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Logo Partiu Plantão">
+        </div>
+
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="plantoes.html">Plantões</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+        </ul>
+
+        <button class="btn-sair" onclick="sair()">
+            <i class="bi bi-box-arrow-right"></i>
+            Sair
+        </button>
+    </header>
+
+    <main>
+
+        <!-- ===== CARD PRINCIPAL: IDENTIDADE DO MÉDICO ===== -->
+        <section class="pf-hero">
+
+            <!-- Avatar -->
+            <div class="pf-avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+
+            <!-- Informações principais -->
+            <div class="pf-hero-info">
+
+                <div class="pf-hero-topo">
+                    <div>
+                        <h1 class="pf-nome">Dr. Alan Ferreira Pereira</h1>
+                        <p class="pf-tipo">
+                            <i class="bi bi-award-fill"></i>
+                            Clínica Geral · CRM 923456/SP
+                        </p>
+                    </div>
+                    <span class="pf-badge-ativo">
+                        <i class="bi bi-circle-fill"></i> Disponível
+                    </span>
+                </div>
+
+                <!-- Avaliação -->
+                <div class="pf-avaliacao">
+                    <span class="pf-nota">4,8</span>
+                    <div class="pf-estrelas">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <span class="pf-num-aval">1,825 avaliações</span>
+                </div>
+
+                <!-- Selos de reputação -->
+                <div class="pf-selos">
+                    <span class="pf-selo">
+                        <i class="bi bi-patch-check-fill"></i> CRM ativo
+                    </span>
+                    <span class="pf-selo">
+                        <i class="bi bi-clock-fill"></i> Alta pontualidade
+                    </span>
+                    <span class="pf-selo">
+                        <i class="bi bi-shield-fill-check"></i> Documentação completa
+                    </span>
+                    <span class="pf-selo">
+                        <i class="bi bi-emoji-smile-fill"></i> Bem avaliado
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Botão Editar Perfil -->
+            <button class="pf-btn-editar">
+                <i class="bi bi-pencil-fill"></i> Editar perfil
+            </button>
+
+        </section>
+
+        <!-- ===== LINHA DE ESTATÍSTICAS ===== -->
+        <div class="pf-stats">
+
+            <div class="pf-stat-card">
+                <i class="bi bi-calendar2-check-fill pf-stat-icone"></i>
+                <span class="pf-stat-valor">56</span>
+                <span class="pf-stat-label">Plantões realizados</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-clock-history pf-stat-icone"></i>
+                <span class="pf-stat-valor">672h</span>
+                <span class="pf-stat-label">Horas trabalhadas</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-hospital-fill pf-stat-icone"></i>
+                <span class="pf-stat-valor">36</span>
+                <span class="pf-stat-label">Clínicas atendidas</span>
+            </div>
+
+            <div class="pf-stat-card">
+                <i class="bi bi-currency-dollar pf-stat-icone"></i>
+                <span class="pf-stat-valor">R$ 1.670</span>
+                <span class="pf-stat-label">Média por plantão</span>
+            </div>
+
+        </div>
+
+        <!-- ===== GRID DE INFORMAÇÕES DETALHADAS ===== -->
+        <div class="pf-grid">
+
+            <!-- COLUNA ESQUERDA -->
+            <div class="pf-col">
+
+                <!-- Card: Dados Pessoais -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-person-vcard-fill"></i>
+                        <h2>Dados pessoais</h2>
+                    </div>
+                    <ul class="pf-lista">
+                        <li>
+                            <i class="bi bi-person"></i>
+                            <span><strong>Nome:</strong> Alan Ferreira Pereira</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-calendar3"></i>
+                            <span><strong>Data de nascimento:</strong> 13/05/1990</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-card-text"></i>
+                            <span><strong>CPF:</strong> 123.456.789-00</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span><strong>Telefone:</strong> (11) 91876-5432</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span><strong>E-mail:</strong> alan.ferreira@email.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span><strong>Cidade:</strong> São Paulo — SP</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: Disponibilidade -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-calendar-week-fill"></i>
+                        <h2>Disponibilidade</h2>
+                    </div>
+
+                    <div class="pf-dias">
+                        <span class="pf-dia ativo">Seg</span>
+                        <span class="pf-dia">Ter</span>
+                        <span class="pf-dia ativo">Qua</span>
+                        <span class="pf-dia">Qui</span>
+                        <span class="pf-dia ativo">Sex</span>
+                        <span class="pf-dia ativo">Sáb</span>
+                        <span class="pf-dia">Dom</span>
+                    </div>
+
+                    <ul class="pf-lista" style="margin-top: 16px;">
+                        <li>
+                            <i class="bi bi-sun"></i>
+                            <span><strong>Turno preferido:</strong> Diurno e Noturno</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo"></i>
+                            <span><strong>Raio de atuação:</strong> até 80 km</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-file-earmark-person"></i>
+                            <span><strong>Tipo de contrato:</strong> PJ / RPA</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- COLUNA DIREITA -->
+            <div class="pf-col">
+
+                <!-- Card: Dados Profissionais -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-briefcase-fill"></i>
+                        <h2>Dados profissionais</h2>
+                    </div>
+                    <ul class="pf-lista">
+                        <li>
+                            <i class="bi bi-award"></i>
+                            <span>
+                                <strong>CRM:</strong> 923456/SP
+                                <span class="pf-badge-ok">Ativo</span>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="bi bi-mortarboard"></i>
+                            <span><strong>Formação:</strong> Medicina — Georgetown University School of Medicine</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-calendar-check"></i>
+                            <span><strong>Ano de formatura:</strong> 2016</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-journals"></i>
+                            <span><strong>Residência:</strong> Clínica Médica — Hospital Sírio-Libanês Bela Vista</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-translate"></i>
+                            <span><strong>Idiomas:</strong> Português, Inglês (fluente), Espanhol (Intermediário)</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-person-badge"></i>
+                            <span><strong>Membro desde:</strong> Novembro de 2025</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: Especialidades -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                        <h2>Especialidades</h2>
+                    </div>
+                    <div class="pf-tags">
+                        <span class="pf-tag">Clínica Geral</span>
+                        <span class="pf-tag">Cirurgia Plástica</span>
+                        <span class="pf-tag">Cardiologia</span>
+                        <span class="pf-tag">Dermatologia</span>
+                        <span class="pf-tag">Neurocirurgia</span>
+                        <span class="pf-tag">Ortopedia e Traumatologia</span>
+                        <span class="pf-tag">Anestesiologia</span>
+                        <span class="pf-tag">Oncologia</span>
+                    </div>
+                </div>
+
+                <!-- Card: Ações Rápidas -->
+                <div class="pf-card">
+                    <div class="pf-card-header">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        <h2>Ações rápidas</h2>
+                    </div>
+                    <div class="pf-acoes">
+                        <button class="pf-btn-acao pf-btn-primary">
+                            <i class="bi bi-search"></i>
+                            <a href="plantoes.html">Ver plantões disponíveis</a>
+                        </button>
+                        <button class="pf-btn-acao pf-btn-secondary"
+                            onclick="window.open('../PDF/historico_plantoes_alan.pdf')" >
+                            <i class="bi bi-clock-history"></i>
+                            Histórico de plantões
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BOTÃO FLUTUANTE -->
+    <div class="notificacao-btn" onclick="toggleNotificacao()" style="position:fixed; bottom:28px; right:28px;">
+        <i class="bi bi-bell-fill"></i>
+        <span class="notif-badge">3</span>
+    </div>
+
+    <!-- DROPDOWN NOTIFICAÇÃO -->
+    <div class="notificacao-container" id="notificacao">
+        <div class="balao">
+            <div class="balao-header">
+                <i class="bi bi-bell-fill"></i>
+                <span>Notificações recentes</span>
+            </div>
+            <div class="balao-lista">
+                <div class="balao-item">
+                    <h3>Plantão confirmado</h3>
+                    <p>UPA Casa Verde — 15/06/2026 às 18:30</p>
+                </div>
+                <div class="balao-item" style="border-left-color:#f5a623;">
+                    <h3>Plantão urgente disponível</h3>
+                    <p>Hospital Santa Cruz — hoje</p>
+                </div>
+                <div class="balao-item" style="border-left-color:#1a8a4a;">
+                    <h3>Pagamento processado</h3>
+                    <p>R$ 1.900,00 — plantão 06/06</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <script>
+
+        // ===== DESTACAR MENU ATIVO =====
+        const links = document.querySelectorAll("header ul li a");
+        let paginaAtual = window.location.pathname.split("/").pop();
+
+        if (paginaAtual === "") paginaAtual = "perfilMedico.html";
+
+        links.forEach(link => {
+            if (link.getAttribute("href") === paginaAtual) {
+                link.classList.add("ativo");
+            }
+        });
+
+        // ===== FUNÇÃO SAIR =====
+        function sair() {
+            if (confirm("Deseja realmente sair?")) {
+                localStorage.clear();
+                window.location.href = "../user/escolherTipoPerfil.html";
+            }
+        }
+
+        /* ===== NOTIFICAÇÃO FLUTUANTE ===== */
+        function toggleNotificacao() {
+            const notif = document.getElementById("notificacao");
+            if (notif.classList.contains("ativa")) {
+                notif.classList.remove("ativa");
+                notif.classList.add("saindo");
+                setTimeout(() => { notif.classList.remove("saindo"); notif.style.display = "none"; }, 280);
+            } else {
+                notif.style.display = "block";
+                notif.classList.add("ativa");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

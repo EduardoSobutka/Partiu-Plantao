@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/plantoesUser.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">
+            <img src="../img/Logotipo Partiu Plantão.jpg" alt="Partiu Plantão">
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="plantoes.html">Plantões</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- ===== BARRA SUPERIOR: TÍTULO + BUSCA ===== -->
+        <div class="pl-topbar">
+            <div class="pl-topbar-titulo">
+                <h1>Plantões disponíveis</h1>
+                <span class="pl-contador" id="contador">12 encontrados</span>
+            </div>
+
+            <div class="pl-busca-wrap">
+                <i class="bi bi-search pl-busca-icone"></i>
+                <input type="text" class="pl-busca" id="inputBusca" placeholder="Buscar por hospital ou especialidade…"
+                    oninput="filtrar()">
+            </div>
+        </div>
+
+        <!-- ===== FILTROS ===== -->
+        <div class="pl-filtros-wrap">
+
+            <!-- Chips rápidos -->
+            <div class="pl-chips">
+                <button class="pl-chip ativo" onclick="setChip(this,'todos')">Todos</button>
+                <button class="pl-chip" onclick="setChip(this,'hoje')">Hoje</button>
+                <button class="pl-chip" onclick="setChip(this,'semana')">Esta semana</button>
+                <button class="pl-chip" onclick="setChip(this,'diurno')">
+                    <i class="bi bi-sun"></i> Diurno
+                </button>
+                <button class="pl-chip" onclick="setChip(this,'noturno')">
+                    <i class="bi bi-moon-stars"></i> Noturno
+                </button>
+                <button class="pl-chip chip-urgente" onclick="setChip(this,'urgente')">
+                    <i class="bi bi-lightning-charge-fill"></i> Urgente
+                </button>
+            </div>
+
+            <!-- Selects avançados -->
+            <div class="pl-selects">
+                <select class="pl-select" id="selEspec" onchange="filtrar()">
+                    <option value="">Especialidade</option>
+                    <option>Anestesiologia</option>
+                    <option>Cardiologia</option>
+                    <option>Cirurgia Plástica</option>
+                    <option>Clínica Geral</option>
+                    <option>Dermatologia</option>
+                    <option>Geriatria</option>
+                    <option>Neurocirurgia</option>
+                    <option>Oncologia</option>
+                    <option>Ortopedia e Traumatologia</option>
+                    <option>Pediatria</option>
+                    <option>Pronto-socorro</option>
+                </select>
+
+                <select class="pl-select" id="selOrdem" onchange="filtrar()">
+                    <option value="data">Ordenar: Data</option>
+                    <option value="valor_desc">Maior valor</option>
+                    <option value="valor_asc">Menor valor</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- ===== GRID DE CARDS ===== -->
+        <div class="pl-grid" id="grid"></div>
+
+        <!-- ===== ESTADO VAZIO ===== -->
+        <div class="pl-vazio" id="vazio" style="display:none;">
+            <i class="bi bi-calendar-x"></i>
+            <p>Nenhum plantão encontrado</p>
+            <span>Tente ajustar os filtros ou a busca.</span>
+        </div>
+
+    </main>
+
+    <!-- ===== MODAL DE CONFIRMAÇÃO ===== -->
+    <div class="pl-modal-overlay" id="overlay" onclick="fecharModal()"></div>
+    <div class="pl-modal" id="modal">
+        <div class="pl-modal-header">
+            <i class="bi bi-calendar2-check-fill"></i>
+            <h2>Confirmar plantão</h2>
+        </div>
+        <div class="pl-modal-corpo" id="modalCorpo"></div>
+        <div class="pl-modal-acoes">
+            <button class="pl-modal-cancelar" onclick="fecharModal()">
+                <i class="bi bi-x-lg"></i> Cancelar
+            </button>
+            <button class="pl-modal-confirmar" onclick="confirmarAceite()">
+                <i class="bi bi-check-lg"></i> Confirmar aceite
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="pl-toast" id="toast">
+        <i class="bi bi-check-circle-fill"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE -->
+    <div class="notificacao-btn" onclick="toggleNotificacao()" style="position:fixed; bottom:28px; right:28px;">
+        <i class="bi bi-bell-fill"></i>
+        <span class="notif-badge">3</span>
+    </div>
+
+    <!-- DROPDOWN NOTIFICAÇÃO -->
+    <div class="notificacao-container" id="notificacao">
+        <div class="balao">
+            <div class="balao-header">
+                <i class="bi bi-bell-fill"></i>
+                <span>Notificações recentes</span>
+            </div>
+            <div class="balao-lista">
+                <div class="balao-item">
+                    <h3>Plantão confirmado</h3>
+                    <p>UPA Casa Verde — 15/06/2026 às 18:30</p>
+                </div>
+                <div class="balao-item" style="border-left-color:#f5a623;">
+                    <h3>Plantão urgente disponível</h3>
+                    <p>Hospital Santa Cruz — hoje</p>
+                </div>
+                <div class="balao-item" style="border-left-color:#1a8a4a;">
+                    <h3>Pagamento processado</h3>
+                    <p>R$ 1.900,00 — plantão 06/06</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DADOS DOS PLANTÕES =====
+        const plantoes = [
+            {
+                id: 1,
+                hospital: "Hospital Albert Einstein",
+                cidade: "Morumbi — São Paulo, SP",
+                especialidade: "Cardiologia",
+                data: "2026-06-13",
+                dataExib: "Sábado, 14/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 2100.00,
+                novo: true,
+                urgente: false
+            },
+            {
+                id: 2,
+                hospital: "Hospital Sírio-Libanês",
+                cidade: "Bela Vista — São Paulo, SP",
+                especialidade: "Oncologia",
+                data: "2026-06-15",
+                dataExib: "Segunda, 15/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 2200.00,
+                novo: true,
+                urgente: false
+            },
+            {
+                id: 3,
+                hospital: "Hospital das Clínicas HCFMUSP",
+                cidade: "Pinheiros — São Paulo, SP",
+                especialidade: "Clínica Geral",
+                data: "2026-06-16",
+                dataExib: "Terça, 16/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "RPA",
+                valor: 1800.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 4,
+                hospital: "UPA Zona Sul",
+                cidade: "Campo Limpo — São Paulo, SP",
+                especialidade: "Pronto-socorro",
+                data: "2026-06-14",
+                dataExib: "Domingo, 14/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 1500.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 5,
+                hospital: "Hospital Santa Catarina",
+                cidade: "Paulista — São Paulo, SP",
+                especialidade: "Neurocirurgia",
+                data: "2026-06-17",
+                dataExib: "Quarta, 17/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 2400.00,
+                novo: true,
+                urgente: false
+            },
+            {
+                id: 6,
+                hospital: "Hospital São Luiz Morumbi",
+                cidade: "Morumbi — São Paulo, SP",
+                especialidade: "Cirurgia Plástica",
+                data: "2026-06-18",
+                dataExib: "Quinta, 18/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 2000.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 7,
+                hospital: "Hospital BP — A Beneficência Portuguesa",
+                cidade: "Higienópolis — São Paulo, SP",
+                especialidade: "Anestesiologia",
+                data: "2026-06-19",
+                dataExib: "Sexta, 19/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 2300.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 8,
+                hospital: "Hospital 9 de Julho",
+                cidade: "Bela Vista — São Paulo, SP",
+                especialidade: "Ortopedia e Traumatologia",
+                data: "2026-06-20",
+                dataExib: "Sábado, 20/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "RPA",
+                valor: 1950.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 9,
+                hospital: "Hospital Oswaldo Cruz",
+                cidade: "Paraíso — São Paulo, SP",
+                especialidade: "Geriatria",
+                data: "2026-06-21",
+                dataExib: "Domingo, 21/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 1850.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 10,
+                hospital: "Hospital Premier",
+                cidade: "Liberdade — São Paulo, SP",
+                especialidade: "Dermatologia",
+                data: "2026-06-22",
+                dataExib: "Segunda, 22/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 1700.00,
+                novo: false,
+                urgente: false
+            },
+            {
+                id: 11,
+                hospital: "UPA Norte — Vila Maria",
+                cidade: "Vila Maria — São Paulo, SP",
+                especialidade: "Clínica Geral",
+                data: "2026-06-13",
+                dataExib: "Sábado, 13/06/2026",
+                turno: "Diurno",
+                horario: "07:00 — 19:00",
+                horas: 12,
+                contrato: "RPA",
+                valor: 1500.00,
+                novo: true,
+                urgente: true
+            },
+            {
+                id: 12,
+                hospital: "Hospital Sancta Maggiore",
+                cidade: "Água Branca — São Paulo, SP",
+                especialidade: "Pediatria",
+                data: "2026-06-23",
+                dataExib: "Terça, 23/06/2026",
+                turno: "Noturno",
+                horario: "19:00 — 07:00",
+                horas: 12,
+                contrato: "PJ",
+                valor: 1900.00,
+                novo: false,
+                urgente: false
+            },
+        ];
+
+        let chipAtivo = 'todos';
+        let plantaoSelecionado = null;
+
+        // ===== FORMATAR VALOR =====
+        function fmtBRL(v) {
+            return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // ===== RENDERIZAR CARD =====
+        function renderCard(p) {
+            const turnoIcon = p.turno === 'Noturno' ? 'bi-moon-stars-fill' : 'bi-sun-fill';
+            const turnoClass = p.turno === 'Noturno' ? 'turno-noturno' : 'turno-diurno';
+
+            return `
+        <div class="pl-card" data-id="${p.id}">
+
+            <div class="pl-card-topo">
+                <div class="pl-hospital-info">
+                    <div class="pl-hosp-icone">
+                        <i class="bi bi-hospital-fill"></i>
+                    </div>
+                    <div class="pl-hosp-texto">
+                        <h3 class="pl-hosp-nome">${p.hospital}</h3>
+                        <p class="pl-hosp-cidade">
+                            <i class="bi bi-geo-alt-fill"></i>${p.cidade}
+                        </p>
+                    </div>
+                </div>
+                <div class="pl-card-badges">
+                    ${p.urgente ? '<span class="pl-badge pl-badge-urgente"><i class="bi bi-lightning-charge-fill"></i>Urgente</span>' : ''}
+                    ${p.novo ? '<span class="pl-badge pl-badge-novo">Novo</span>' : ''}
+                    <span class="pl-badge ${turnoClass}">
+                        <i class="bi ${turnoIcon}"></i>${p.turno}
+                    </span>
+                </div>
+            </div>
+
+            <div class="pl-card-corpo">
+                <span class="pl-espec-tag">${p.especialidade}</span>
+
+                <div class="pl-info-lista">
+                    <div class="pl-info-item">
+                        <i class="bi bi-calendar3"></i>
+                        <span>${p.dataExib}</span>
+                    </div>
+                    <div class="pl-info-item">
+                        <i class="bi bi-clock"></i>
+                        <span>${p.horario} <strong>(${p.horas}h)</strong></span>
+                    </div>
+                    <div class="pl-info-item">
+                        <i class="bi bi-file-earmark-person"></i>
+                        <span>Contrato ${p.contrato}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pl-card-rodape">
+                <div class="pl-valor-wrap">
+                    <span class="pl-valor-label">Valor do plantão</span>
+                    <span class="pl-valor">${fmtBRL(p.valor)}</span>
+                </div>
+                <button class="pl-btn-aceitar" onclick="abrirModal(${p.id})">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Aceitar plantão
+                </button>
+            </div>
+
+        </div>`;
+        }
+
+        // ===== FILTRAR E RENDERIZAR =====
+        function filtrar() {
+            const busca = document.getElementById('inputBusca').value.toLowerCase();
+            const espec = document.getElementById('selEspec').value;
+            const ordem = document.getElementById('selOrdem').value;
+
+            let lista = [...plantoes];
+
+            // Chip rápido
+            const hoje = new Date().toISOString().split('T')[0];
+            const fim7 = new Date(); fim7.setDate(fim7.getDate() + 7);
+            if (chipAtivo === 'hoje') lista = lista.filter(p => p.data === hoje);
+            if (chipAtivo === 'semana') lista = lista.filter(p => p.data >= hoje && p.data <= fim7.toISOString().split('T')[0]);
+            if (chipAtivo === 'diurno') lista = lista.filter(p => p.turno === 'Diurno');
+            if (chipAtivo === 'noturno') lista = lista.filter(p => p.turno === 'Noturno');
+            if (chipAtivo === 'urgente') lista = lista.filter(p => p.urgente);
+
+            // Busca livre
+            if (busca) lista = lista.filter(p =>
+                p.hospital.toLowerCase().includes(busca) ||
+                p.especialidade.toLowerCase().includes(busca) ||
+                p.cidade.toLowerCase().includes(busca)
+            );
+
+            // Especialidade
+            if (espec) lista = lista.filter(p => p.especialidade === espec);
+
+            // Ordenação
+            if (ordem === 'valor_desc') lista.sort((a, b) => b.valor - a.valor);
+            else if (ordem === 'valor_asc') lista.sort((a, b) => a.valor - b.valor);
+            else lista.sort((a, b) => a.data.localeCompare(b.data));
+
+            const grid = document.getElementById('grid');
+            const vazio = document.getElementById('vazio');
+            const cont = document.getElementById('contador');
+
+            if (lista.length === 0) {
+                grid.innerHTML = '';
+                vazio.style.display = 'flex';
+            } else {
+                vazio.style.display = 'none';
+                grid.innerHTML = lista.map(renderCard).join('');
+            }
+
+            const s = lista.length === 1 ? 'encontrado' : 'encontrados';
+            cont.textContent = `${lista.length} ${s}`;
+        }
+
+        // ===== CHIP RÁPIDO =====
+        function setChip(el, tipo) {
+            document.querySelectorAll('.pl-chip').forEach(c => c.classList.remove('ativo'));
+            el.classList.add('ativo');
+            chipAtivo = tipo;
+            filtrar();
+        }
+
+        // ===== MODAL =====
+        function abrirModal(id) {
+            plantaoSelecionado = plantoes.find(p => p.id === id);
+            const p = plantaoSelecionado;
+            document.getElementById('modalCorpo').innerHTML = `
+            <div class="pl-modal-info">
+                <div class="pl-modal-linha">
+                    <i class="bi bi-hospital-fill"></i>
+                    <div>
+                        <span class="pl-modal-label">Hospital</span>
+                        <span class="pl-modal-val">${p.hospital}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                    <div>
+                        <span class="pl-modal-label">Especialidade</span>
+                        <span class="pl-modal-val">${p.especialidade}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-calendar3"></i>
+                    <div>
+                        <span class="pl-modal-label">Data e horário</span>
+                        <span class="pl-modal-val">${p.dataExib} · ${p.horario} (${p.horas}h)</span>
+                    </div>
+                </div>
+                <div class="pl-modal-linha">
+                    <i class="bi bi-file-earmark-person"></i>
+                    <div>
+                        <span class="pl-modal-label">Contrato</span>
+                        <span class="pl-modal-val">${p.contrato}</span>
+                    </div>
+                </div>
+                <div class="pl-modal-valor-destaque">
+                    <span class="pl-modal-label">Valor do plantão</span>
+                    <span class="pl-modal-valor-num">${fmtBRL(p.valor)}</span>
+                </div>
+            </div>
+        `;
+            document.getElementById('overlay').classList.add('ativo');
+            document.getElementById('modal').classList.add('ativo');
+        }
+
+        function fecharModal() {
+            document.getElementById('overlay').classList.remove('ativo');
+            document.getElementById('modal').classList.remove('ativo');
+            plantaoSelecionado = null;
+        }
+
+        function confirmarAceite() {
+            fecharModal();
+            // Remove o card da lista
+            const idx = plantoes.findIndex(p => p.id === plantaoSelecionado?.id ?? -1);
+            // Re-renderiza sem o card aceito (simulação)
+            mostrarToast(`Plantão aceito! ${plantaoSelecionado ? plantaoSelecionado.hospital : ''}`);
+            filtrar();
+        }
+
+        // ===== TOAST =====
+        function mostrarToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('ativo');
+            setTimeout(() => toast.classList.remove('ativo'), 3500);
+        }
+
+        // ===== MENU ATIVO =====
+        const links = document.querySelectorAll("header ul li a");
+        const paginaAtual = window.location.pathname.split("/").pop() || "plantoes.html";
+        links.forEach(link => {
+            if (link.getAttribute("href") === paginaAtual) link.classList.add("ativo");
+        });
+
+        // ===== INICIALIZAR =====
+        filtrar();
+
+        /* ===== NOTIFICAÇÃO FLUTUANTE ===== */
+        function toggleNotificacao() {
+            const notif = document.getElementById("notificacao");
+            if (notif.classList.contains("ativa")) {
+                notif.classList.remove("ativa");
+                notif.classList.add("saindo");
+                setTimeout(() => { notif.classList.remove("saindo"); notif.style.display = "none"; }, 280);
+            } else {
+                notif.style.display = "block";
+                notif.classList.add("ativa");
+            }
+        }
+    </script>
+</body>
+
+</html>

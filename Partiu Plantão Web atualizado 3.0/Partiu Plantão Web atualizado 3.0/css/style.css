@@ -1,0 +1,464 @@
+/* ===== IMPORTAÇÃO DE FONTE ===== */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ===== RESET GLOBAL ===== */
+* {
+    margin: 0;
+    /* Remove margens padrão */
+    padding: 0;
+    /* Remove espaçamentos */
+    font-family: "Open Sans", sans-serif;
+    /* Fonte padrão */
+    box-sizing: border-box;
+    /* Inclui padding e border no tamanho */
+}
+
+/* ===== CENTRALIZAÇÃO GLOBAL ===== */
+.Centralizar {
+    display: flex;
+    justify-content: center;
+    /* Centraliza horizontal */
+    align-items: center;
+    /* Centraliza vertical */
+    min-height: 100vh;
+    /* Altura mínima da tela inteira */
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+.botaoVoltar {
+    position: fixed; /* Fixa na tela */
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 40px;
+    border-radius: 12px;
+    border: 2px solid #00172e;
+    background-color: #ffff;
+    color: #0050a0;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: border-color 0.18s, background-color 0.18s, transform 0.12s;
+}
+
+.botaoVoltar:hover {
+    background-color: #002447;
+    border-color: #004183;
+    color: #ffff ;
+    transform: translateY(-2px);
+}
+
+.botaoVoltar:active {
+    transform: translateY(0);
+}
+
+/* ========================================================= */
+/* ===== TELA 1 (ESCOLHA: MÉDICO OU ADMIN) ===== */
+/* ========================================================= */
+.pp-pagina {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgb(4, 44, 83);
+    font-family: 'Inter', sans-serif;
+}
+
+.pp-card {
+    background: #ffffff;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 440px;
+    overflow: hidden;
+    border: none;
+    text-align: center;
+}
+
+.pp-header {
+    background-color: #073454;
+    padding: 36px 40px 32px;
+}
+
+.pp-logo-slot {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    background-color: #0C447C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    font-family: 'Inter', sans-serif;
+}
+
+.pp-logo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.pp-titulo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    letter-spacing: -0.4px;
+}
+
+.pp-subtitulo {
+    font-size: 14px;
+    color: #85B7EB;
+    font-weight: 400;
+    margin: 0;
+}
+
+.pp-body {
+    padding: 28px 32px 32px;
+    background: #ffffff;
+}
+
+.pp-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #a0afc0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+}
+
+.pp-botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pp-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1.5px solid #B5D4F4;
+    background: #E6F1FB;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    transition: border-color 0.18s, background-color 0.18s, transform 0.12s;
+}
+
+.pp-btn:hover {
+    border-color: #185FA5;
+    background-color: #cfe3f6;
+    transform: translateY(-2px);
+}
+
+.pp-btn:active {
+    transform: translateY(0);
+}
+
+.pp-btn-icone {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 2px dashed #85B7EB;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: #378ADD;
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+.pp-btn-icone img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.pp-btn-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.pp-btn-texto strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0C447C;
+}
+
+.pp-btn-texto span {
+    font-size: 13px;
+    color: #378ADD;
+    font-weight: 400;
+}
+
+.pp-btn-seta {
+    color: #85B7EB;
+    flex-shrink: 0;
+    transition: color 0.18s;
+}
+
+.pp-btn:hover .pp-btn-seta {
+    color: #073454;
+}
+
+.pp-rodape {
+    margin-top: 24px;
+    font-size: 11px;
+    color: #454c52;
+}
+
+/* ========================================================= */
+/* ===== TELA 2 (LOGIN) ===== */
+/* ========================================================= */
+
+.pp-form-group {
+    margin-bottom: 12px;
+}
+
+.pp-input {
+    width: 100%;
+    height: 50px;
+    border-radius: 12px;
+    background-color: #E6F1FB;
+    border: 1.5px solid #B5D4F4;
+    outline: none; /* Remove borda ao clicar */
+    color: #0C447C;
+    padding: 0 18px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.15s ease;
+}
+
+.pp-input:hover {
+    border-color: #185FA5;
+    background-color: #cfe3f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(7, 52, 84, 0.12);
+}
+
+.pp-input:focus {
+    border-color: #185FA5;
+    background-color: #cfe3f6;
+    transform: translateY(-2px);
+}
+
+.pp-input:active {
+    transform: translateY(0);
+}
+
+.pp-input::placeholder {
+    color: #85B7EB;
+}
+
+/* TÍTULOS */
+.container h1 {
+    font-size: 55px;
+    color: #073454;
+}
+
+.container h2 {
+    font-size: 31px;
+    color: #13486d;
+    margin-top: -12px;
+}
+
+/* ESQUECI SENHA */
+.pp-esqueci {
+    text-align: right;
+    margin-bottom: 16px;
+    margin-top: -4px;
+}
+
+.pp-esqueci a {
+    text-decoration: none;
+    font-size: 13px;
+    color: #378ADD;
+    font-family: 'Inter', sans-serif;
+}
+
+.pp-esqueci a:hover {
+    text-decoration: underline;
+}
+
+/* BOTÃO ENTRAR */
+.pp-btn-entrar {
+    width: 100%;
+    height: 50px;
+    border-radius: 14px;
+    background-color: #073454;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.18s, transform 0.12s;
+}
+
+.pp-btn-entrar:hover {
+    background-color: #0C447C;
+    transform: translateY(-1px);
+}
+
+.pp-btn-entrar:active {
+    transform: translateY(0);
+}
+
+/* LINK REGISTRO */
+.pp-rodape {
+    margin-top: 8px;
+}
+
+.pp-rodape a {
+    text-decoration: none;
+    color: #378ADD;
+}
+
+.pp-rodape a:hover {
+    text-decoration: none;
+}
+
+/* ========================================================= */
+/* ===== TELA 3 E 4 (CADASTRO) ===== */
+/* ========================================================= */
+
+.container2 {
+    width: 500px;
+    text-align: center;
+}
+
+.container2 h2 {
+    font-size: 31px;
+    color: #13486d;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* INPUTS */
+.input2 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.input2 input {
+    border-radius: 12px;
+    width: 300px;
+    height: 50px;
+    background-color: #d9d9d9;
+    border: #a6a6a6 solid 2px;
+    outline: none;
+    color: #073454;
+    padding: 20px 45px 20px 20px;
+    font-size: 15px;
+}
+
+/* BOTÃO REGISTRAR */
+.registrese {
+    margin-top: 15px;
+    border-radius: 12px;
+    width: 300px;
+    height: 50px;
+    background-color: #073454;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.registrese:hover {
+    border: 2px solid;
+}
+
+/* LINK LOGIN */
+.facalogin {
+    margin-top: 8px;
+}
+
+.facalogin a {
+    text-decoration: none;
+    color: black;
+}
+
+.facalogin a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================================= */
+/* ===== TELA 5 (CONFIRMAÇÃO DE EMAIL) ===== */
+/* ========================================================= */
+
+.pp-confirm-titulo {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0C447C;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 6px;
+}
+
+.pp-confirm-email {
+    font-size: 14px;
+    font-weight: 600;
+    color: #378ADD;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 4px;
+}
+
+.pp-confirm-texto {
+    font-size: 13px;
+    color: #a0afc0;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 20px;
+}
+
+/* CAMPO DE CÓDIGO */
+.pp-codigo {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.pp-codigo .codigoinput {
+    width: 46px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: #E6F1FB;
+    border: 1.5px solid #B5D4F4;
+    outline: none;
+    color: #0C447C;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.15s ease;
+}
+
+.pp-codigo .codigoinput:hover {
+    border-color: #185FA5;
+    background-color: #cfe3f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(7, 52, 84, 0.12);
+}
+
+.pp-codigo .codigoinput:focus {
+    border-color: #185FA5;
+    background-color: #cfe3f6;
+    transform: translateY(-2px);
+}
+
+.pp-codigo .codigoinput::placeholder {
+    color: #85B7EB;
+}

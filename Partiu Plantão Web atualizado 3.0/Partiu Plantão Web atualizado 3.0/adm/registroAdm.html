@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partiu Plantão</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+</head>
+
+<body class="pp-pagina">
+
+    <!-- CARD PRINCIPAL -->
+    <div class="pp-card">
+
+        <div class="pp-header">
+            <div class="pp-logo-slot">
+                <img src="../img/Logotipo Partiu Plantão.jpg" alt="logo">
+            </div>
+            <h1 class="pp-titulo">Partiu Plantão</h1>
+
+            <!-- Título da página -->
+            <p class="pp-subtitulo">Disponibilize seu próximo plantão</p>
+        </div>
+
+        <div class="pp-body">
+
+            <!-- FORMULÁRIO -->
+            <form>
+                <!-- AGRUPAMENTO DOS INPUTS -->
+                <div class="pp-form-group">
+                    <!-- Campo de email -->
+                    <input class="pp-input" type="email" placeholder="Email" id="email" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de telefone -->
+                    <input class="pp-input" type="tel" placeholder="Telefone" id="telefone" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de razão social (nome da empresa) -->
+                    <input class="pp-input" type="text" placeholder="Razão social" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de CNPJ -->
+                    <input class="pp-input" type="text" placeholder="CNPJ" id="CNPJ" maxlength="18" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de endereço -->
+                    <input class="pp-input" type="text" placeholder="Endereço" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de CEP -->
+                    <input class="pp-input" type="text" placeholder="CEP" maxlength="9" id="CEP" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de senha -->
+                    <input class="pp-input" type="password" id="senha1" placeholder="Senha" minlength="6" required>
+                </div>
+
+                <div class="pp-form-group">
+                    <!-- Campo de confirmação de senha -->
+                    <input class="pp-input" type="password" id="senha2" placeholder="Confirme sua senha" minlength="6" required>
+                </div>
+
+                <!-- BOTÃO REGISTRAR -->
+                <div>
+                    <button class="pp-btn-entrar" type="button" onclick="registrarAdm()">
+                        Registrar
+                    </button>
+                </div>
+
+                <!-- LINK PARA LOGIN -->
+                <p class="pp-rodape">
+                    Já tem conta?
+                    <a href="loginAdm.html"><b>Faça login</b></a>
+                </p>
+
+            </form>
+        </div>
+
+        <button class="botaoVoltar" onclick="window.history.back()">Voltar</button>
+        
+    </div>
+    <!-- SCRIPT 1: FORMATAÇÃO CNPJ E TELEFONE -->
+    <script>
+
+        // Seleciona campo de CNPJ
+        const CNPJ = document.getElementById("CNPJ");
+
+        // Sempre que digitar no CNPJ
+        CNPJ.addEventListener("input", () => {
+
+            // Remove tudo que não for número
+            let valor = CNPJ.value.replace(/\D/g, "");
+
+            // Limita a 14 dígitos
+            valor = valor.slice(0, 14);
+
+            // Formata no padrão de CNPJ
+            valor = valor.replace(/^(\d{2})(\d)/, "$1.$2");
+            valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+            valor = valor.replace(/\.(\d{3})(\d)/, ".$1/$2");
+            valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+
+            // Atualiza o valor do input
+            CNPJ.value = valor;
+        });
+
+        // Seleciona campo de telefone
+        const telefone = document.getElementById("telefone");
+
+        telefone.addEventListener("input", () => {
+
+            // Remove caracteres não numéricos
+            let valor = telefone.value.replace(/\D/g, "");
+
+            // Formata como (xx) xxxxx-xxxx
+            valor = valor.replace(/^(\d{2})(\d)/, "($1) $2");
+            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+
+            telefone.value = valor;
+        });
+
+    </script>
+
+    <!-- SCRIPT 2: CEP + FUNÇÕES -->
+    <script>
+
+        // Seleciona campo de CEP
+        const CEP = document.getElementById("CEP");
+
+        CEP.addEventListener("input", () => {
+
+            // Remove tudo que não for número
+            let valor = CEP.value.replace(/\D/g, "");
+
+            // Limita a 8 números
+            valor = valor.slice(0, 8);
+
+            // Formata como 00000-000
+            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+
+            CEP.value = valor;
+        });
+
+        // FUNÇÃO DE VOLTAR
+        function voltar() {
+            window.history.back();
+            // Volta para página anterior
+        }
+
+        // FUNÇÃO DE REGISTRO
+        function registrarAdm() {
+
+            // Pega valores dos inputs
+            let email = document.getElementById("email").value;
+            let senha1 = document.getElementById("senha1").value;
+            let senha2 = document.getElementById("senha2").value;
+
+            // Validação: email vazio
+            if (email === "") {
+                alert("Digite seu e-mail.");
+                return;
+            }
+
+            // Validação: senha curta
+            if (senha1.length < 6) {
+                alert("A senha deve ter pelo menos 6 caracteres.");
+                return;
+            }
+
+            // Validação: senhas diferentes
+            if (senha1 !== senha2) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            // Salva email no navegador
+            localStorage.setItem("emailAdmin", email);
+
+            // Redireciona para próxima página
+            window.location.href = "confirmarEmailAdm.html";
+        }
+
+    </script>
+</body>
+
+</html>

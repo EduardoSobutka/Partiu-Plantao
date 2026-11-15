@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Disponibilizar Plantão</title>
+    <link rel="stylesheet" href="../css/dispoPlantao.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Logotipo Partiu Plantão.jpg" type="image/png">
+
+    <style>
+        
+    </style>
+</head>
+
+<body class="body-dispoPlantao">
+
+    <div class="container">
+
+        <div class="topo">
+            <a href="plantoesAdmin.html" class="voltar">← voltar</a>
+            <h1>Partiu Plantão</h1>
+            <p>Disponibilize o plantão</p>
+        </div>
+
+        <div class="conteudo">
+
+            <div class="formulario">
+
+                <!-- PERÍODO -->
+                <label>Período</label>
+                <div class="linha">
+                    <input type="date" id="dataInicio">
+                    <span>-</span>
+                    <input type="date" id="dataFim">
+                </div>
+
+                <!-- HORÁRIO -->
+                <label>Horário</label>
+                <div class="linha">
+                    <input type="time" id="horaInicio" value="08:00">
+                    <span>-</span>
+                    <input type="time" id="horaFim" value="17:00">
+                </div>
+
+                <!-- ESPECIALIDADE -->
+                <label>Especialidade</label>
+                <select id="especialidade">
+                    <option value="">Nenhuma</option>
+                    <option>Anestesiologia</option>
+                    <option>Cardiologia</option>
+                    <option>Cirurgia Geral</option>
+                    <option>Clínico Geral</option>
+                    <option>Neurologia</option>
+                    <option>Ortopedia e Traumatologia</option>
+                    <option>Pediatria</option>
+                </select>
+
+                <!-- TIPO DE CONTRATO -->
+                <label>Tipo de Contrato</label>
+                <div class="opcoes-grupo" id="grupo-contrato">
+                    <label class="opcao-card selecionado" id="card-pj">
+                        <input type="radio" name="contrato" value="PJ" checked>
+                        <span class="opcao-icone">🏢</span>
+                        <span class="opcao-titulo">PJ</span>
+                        <span class="opcao-sub">Pessoa Jurídica</span>
+                    </label>
+                    <label class="opcao-card" id="card-rpa">
+                        <input type="radio" name="contrato" value="RPA">
+                        <span class="opcao-icone">📄</span>
+                        <span class="opcao-titulo">RPA</span>
+                        <span class="opcao-sub">Recibo de Pagamento</span>
+                    </label>
+                </div>
+
+                <!-- URGÊNCIA -->
+                <label>Urgência do Plantão</label>
+                <div class="opcoes-grupo" id="grupo-urgencia">
+                    <label class="opcao-card selecionado" id="card-normal">
+                        <input type="radio" name="urgencia" value="Normal" checked>
+                        <span class="opcao-icone">🗓️</span>
+                        <span class="opcao-titulo">Normal</span>
+                        <span class="opcao-sub">Sem urgência</span>
+                    </label>
+                    <label class="opcao-card opcao-urgente" id="card-urgente">
+                        <input type="radio" name="urgencia" value="Urgente">
+                        <span class="opcao-icone">🚨</span>
+                        <span class="opcao-titulo">Urgente</span>
+                        <span class="opcao-sub">Precisa com rapidez</span>
+                    </label>
+                </div>
+
+                <!-- LOCAL (vem do perfil da clínica) -->
+                <label>Local</label>
+                <input type="text" id="local" readonly
+                    style="background:#f3f4f6; cursor:not-allowed; color:#6b7280;">
+
+                <!-- ENDEREÇO (vem do perfil da clínica) -->
+                <label>Endereço</label>
+                <input type="text" id="endereco" readonly
+                    style="background:#f3f4f6; cursor:not-allowed; color:#6b7280;">
+
+                <!-- REMUNERAÇÃO -->
+                <label>Remuneração</label>
+                <input type="text" id="pagamento" placeholder="R$ 1000,00">
+
+            </div>
+
+            <div class="lado-direito">
+                <img src="../img/Logotipo Partiu Plantão.jpg" alt="imagem">
+                <button onclick="salvarPlantao()">Disponibilizar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        // ===============================
+        // CARREGAR DADOS DA CLÍNICA DO PERFIL
+        // ===============================
+        (function carregarClinica() {
+            const clinica = JSON.parse(localStorage.getItem('clinicaPerfil')) || {};
+            const campoLocal    = document.getElementById('local');
+            const campoEndereco = document.getElementById('endereco');
+
+            if (clinica.nome) {
+                campoLocal.value = clinica.nome;
+            } else {
+                campoLocal.value = 'Clínica não encontrada — acesse o Perfil primeiro';
+                campoLocal.style.color = '#dc2626';
+            }
+
+            if (clinica.endereco) {
+                campoEndereco.value = clinica.endereco;
+            } else {
+                campoEndereco.value = 'Endereço não encontrado — acesse o Perfil primeiro';
+                campoEndereco.style.color = '#dc2626';
+            }
+        })();
+
+
+        // ===============================
+        // SELEÇÃO VISUAL DOS CARDS (CONTRATO)
+        // ===============================
+        document.querySelectorAll('#grupo-contrato .opcao-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('#grupo-contrato .opcao-card')
+                    .forEach(c => c.classList.remove('selecionado'));
+                card.classList.add('selecionado');
+            });
+        });
+
+
+        // ===============================
+        // SELEÇÃO VISUAL DOS CARDS (URGÊNCIA)
+        // ===============================
+        document.querySelectorAll('#grupo-urgencia .opcao-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('#grupo-urgencia .opcao-card')
+                    .forEach(c => c.classList.remove('selecionado'));
+                card.classList.add('selecionado');
+            });
+        });
+
+
+        // ===============================
+        // FORMATAÇÃO DO CAMPO DE PAGAMENTO
+        // ===============================
+        const input = document.getElementById("pagamento");
+
+        input.addEventListener("input", (e) => {
+            let valor = e.target.value;
+
+            // Remove tudo que não for número
+            valor = valor.replace(/\D/g, "");
+
+            if (valor === "") {
+                e.target.value = "";
+                return;
+            }
+
+            // Converte para decimal (divide por 100)
+            valor = (parseInt(valor) / 100).toFixed(2);
+
+            // Formata padrão brasileiro
+            valor = valor
+                .replace(".", ",")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            e.target.value = "R$ " + valor;
+        });
+
+
+        // ===============================
+        // GERAR ID ÚNICO
+        // ===============================
+        function gerarId() {
+            return 'plantao-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+
+        // ===============================
+        // FUNÇÃO PRINCIPAL (SALVAR PLANTÃO)
+        // ===============================
+        function salvarPlantao() {
+
+            const dataInicio    = document.getElementById("dataInicio").value;
+            const dataFim       = document.getElementById("dataFim").value;
+            const horaInicio    = document.getElementById("horaInicio").value;
+            const horaFim       = document.getElementById("horaFim").value;
+            const especialidade = document.getElementById("especialidade").value;
+            const valor         = document.getElementById("pagamento").value;
+            const local         = document.getElementById("local").value;
+            const endereco      = document.getElementById("endereco").value;
+            const contrato      = document.querySelector('input[name="contrato"]:checked').value;
+            const urgencia      = document.querySelector('input[name="urgencia"]:checked').value;
+
+            // ===============================
+            // VALIDAÇÃO
+            // ===============================
+            if (!dataInicio || !dataFim || !horaInicio || !horaFim || !valor) {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+            // Formata datas para exibição dd/mm/aaaa
+            function formatarData(str) {
+                const [ano, mes, dia] = str.split("-");
+                return `${dia}/${mes}/${ano}`;
+            }
+
+            // ===============================
+            // CRIA OBJETO DO PLANTÃO
+            // ===============================
+            const plantao = {
+                id:            gerarId(),
+                local:         local,
+                data:          formatarData(dataInicio) + " até " + formatarData(dataFim),
+                horario:       horaInicio + " - " + horaFim,
+                especialidade: especialidade || "Nenhuma",
+                valor:         valor,
+                endereco:      endereco,
+                contrato:      contrato,
+                urgencia:      urgencia,
+                status:        "disponivel"
+            };
+
+            // ===============================
+            // SALVA NA LISTA UNIFICADA 'plantoes'
+            // ===============================
+            const lista = JSON.parse(localStorage.getItem("plantoes")) || [];
+            lista.push(plantao);
+            localStorage.setItem("plantoes", JSON.stringify(lista));
+
+            // ===============================
+            // REDIRECIONA PARA PLANTÕES (ABA DISPONÍVEIS)
+            // ===============================
+            window.location.href = "plantoesAdmin.html#disponiveis";
+        }
+
+    </script>
+</body>
+</html>
